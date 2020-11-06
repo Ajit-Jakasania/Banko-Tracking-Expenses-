@@ -43,12 +43,11 @@
 
 .mainContent {
   padding: 14px 16px;
-  background-color:grey;
+  background-color:pink;
   margin-left: 10%;
   margin-right: 10%;
   margin-top: 2%;
   height: 100%;
-
   text-decoration: none;
 }
 
@@ -66,13 +65,13 @@
 }
 
 .footer {
-  background-color: #333;
+  background-color: purple;
   overflow: hidden;
 }
 
 .footer a {
   float: left;
-  color: white;
+  color: pink;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -95,6 +94,7 @@
   float:right;
 }
 
+
 .bottomMiddle {
   float: none;
   position: absolute;
@@ -104,6 +104,6 @@
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
-  color: white;
+  color: pink;
 
 }
