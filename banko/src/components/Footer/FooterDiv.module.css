@@ -1,0 +1,28 @@
+.FooterDiv {
+
+    font-size: 20px;
+    text-align: center;
+    font-style: italic;
+    font-family: 'Gill Sans', 'Gill Sans MT', "Calibri", 'Trebuchet MS', "sans-serif";
+
+}
+
+.FooterDiv a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .FooterDiv a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .FooterDiv a.active {
+    background-color: purple;
+    color: pink;
+  }
+  
