@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Navbar from '../../components/Navbar/Navbar'
-import PageContent from './components/PageContent';
+import LoginContainer from './components/LoginContainer';
 import Footer from '../../components/Footer/Footer'
 
 function LoginPage()
@@ -9,8 +9,10 @@ function LoginPage()
     return (
         <div>
             <Navbar/>
-            <PageContent/>
+            <LoginContainer/>
             <Footer/>
         </div>
     )
 }
+
+export default LoginPage;
