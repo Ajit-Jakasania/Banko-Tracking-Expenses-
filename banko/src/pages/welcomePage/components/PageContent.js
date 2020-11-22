@@ -22,7 +22,7 @@ function PageContent() {
             <Content text="View Your Spending Patterns!" />
             <Content text="View Your Spending Patterns!" />
             <Content text="View Your Spending Patterns!" />
-            <Content text="View Your Spending Patterns!" />
+            <Content text="But I don't wanna!" />
 
 
         </div>
