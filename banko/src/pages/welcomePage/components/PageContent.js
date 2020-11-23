@@ -21,10 +21,6 @@ function PageContent() {
             <Content text="View Your Spending Patterns!" />
             <Content text="View Your Spending Patterns!" />
             <Content text="View Your Spending Patterns!" />
-<<<<<<< HEAD
-            <Content text="View Your Spending Patterns!" />
-=======
->>>>>>> ed7c0569ef49c76a139e338ab25327fe018ad695
             <Content text="But I don't wanna!" />
 
 
