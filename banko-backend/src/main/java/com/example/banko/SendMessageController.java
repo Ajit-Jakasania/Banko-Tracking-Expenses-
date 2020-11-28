@@ -1,10 +1,8 @@
 package com.example.banko;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.*;
-import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -40,15 +38,15 @@ public class SendMessageController {
     public @ResponseBody String sendMessage(@RequestBody Message message) {
         int status = 0;
         try {
-            status = message.sendGroupMessage();
+            message.sendGroupMessage();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
         if (status == 1)
-            System.out.println("Message sent");
+            return "Message sent";
         else
-            System.out.println("Message not sent");
+            return "Message not sent";
     }
 
 }

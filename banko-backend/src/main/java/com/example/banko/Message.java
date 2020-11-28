@@ -23,7 +23,11 @@ public class Message {
         if (messageContentID == -1)
             return -1;
 
-        return 0;
+        if (addMessage(messageContentID, group_id, user_id, connection) == 1)
+            return 1;
+        else
+            return -1;
+
     }
 
     /**
