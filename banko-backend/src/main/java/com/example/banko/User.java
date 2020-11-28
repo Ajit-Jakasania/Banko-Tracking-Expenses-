@@ -155,6 +155,7 @@ public class User {
 
                     ResultSet rs = statement.executeQuery(query);
 
+                    status = 3;
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -162,12 +163,10 @@ public class User {
             } else {
                 // Return to front-end, username is not unique
                 status = 2;
-                return status;
             }
         } else {
             // Return to front-end, phoneNumber is not 11 digits
             status = 1;
-            return status;
         }
 
         // Return value to front-end, fail=0, pass=1
@@ -426,5 +425,37 @@ public class User {
 
     public void setDate_created(String date_created) {
         this.date_created = date_created;
+    }
+
+    public String getStreet_name() {
+        return street_name;
+    }
+
+    public void setStreet_name(String street_name) {
+        this.street_name = street_name;
+    }
+
+    public int getZip_code() {
+        return zip_code;
+    }
+
+    public void setZip_code(int zip_code) {
+        this.zip_code = zip_code;
+    }
+
+    public String getCity_name() {
+        return city_name;
+    }
+
+    public void setCity_name(String city_name) {
+        this.city_name = city_name;
+    }
+
+    public String getCountry_name() {
+        return country_name;
+    }
+
+    public void setCountry_name(String country_name) {
+        this.country_name = country_name;
     }
 }

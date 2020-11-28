@@ -33,10 +33,11 @@ public class UserRegistrationController {
 
     /*
      * 
-     * Takes in user details as such first_name, last_name, email, phone_number,
-     * street_name, zip_code, city_name, country_name, username, password,
-     * birth_month, birth_day, birth_year Note: phone_number and zipcode are the
-     * ONLY values that may be empty / null.
+     * Needs to take in user details as such first_name, last_name, email,
+     * phone_number, street_name, zip_code, city_name, country_name, username,
+     * password, birth_month, birth_day, birth_year
+     * 
+     * Note: phone_number and zipcode are the ONLY values that may be empty / null.
      * 
      * Address id input requires that we first send in all the address details. So,
      * we take all the address details here, as the registeration page will take the
