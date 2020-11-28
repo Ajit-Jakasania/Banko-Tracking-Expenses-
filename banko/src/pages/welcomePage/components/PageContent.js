@@ -14,8 +14,7 @@ function PageContent() {
             <Content text="See Your Transaction History!" />
             <Content text="Utilize a Message Board for Your Financial Needs!" />
             <Content text="View Your Spending Patterns!" />
-
-            <Content text="View Your Spending Patterns!" />
+            
             <Content text="View Your Spending Patterns!" />
             <Content text="View Your Spending Patterns!" />
             <Content text="View Your Spending Patterns!" />
