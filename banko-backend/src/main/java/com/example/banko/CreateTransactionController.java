@@ -8,31 +8,26 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
-public class SendMessageController {
+public class CreateTransactionController {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
     @CrossOrigin
 
-    /**
-     * Adds message to the message and message content tables
-     * 
-     * @param message
-     * @return
-     */
-    @PostMapping(value = "/message")
-    public @ResponseBody String sendMessage(@RequestBody Message message) {
+    @PostMapping(value = "/transaction")
+    public @ResponseBody String sendMessage(@RequestBody Transaction transaction) {
         int status = 0;
         try {
-            message.sendGroupMessage();
+            transaction.createTransaction();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
         if (status == 1)
-            return "Message sent";
+            return "Transaction made";
         else
-            return "Message not sent";
+            return "Transaction not made";
     }
 
+    // TODO: ADD controller for closing a transaction
 }
