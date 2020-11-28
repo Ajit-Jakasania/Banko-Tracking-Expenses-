@@ -29,5 +29,32 @@ public class CreateTransactionController {
             return "Transaction not made";
     }
 
-    // TODO: ADD controller for closing a transaction
+    public @ResponseBody String addBill(@RequestBody Bill bill) {
+        int status = 0;
+        try {
+            bill.createBill();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (status == 1)
+            return "Bill made";
+        else
+            return "Bill not made";
+    }
+
+    public @ResponseBody String closeTransaction(@RequestBody Transaction transaction) {
+        int status = 0;
+        try {
+            transaction.closeTransaction();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (status == 1)
+            return "Transaction closed";
+        else
+            return "Transaction not closed";
+    }
+
 }
