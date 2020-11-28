@@ -24,14 +24,14 @@ public class Transaction {
     public int createTransaction() throws SQLException {
         Connection connection = BankoBackendServer.connection;
 
-        String query = "INSERT INTO omjmf6vzmpqpgc0p.transaction(group_id, date_created, date_closed, transaction_content, amount) VALUES("
-                + group_id + ", NOW(), NOW(), '" + transaction_content + "', " + amount + "))";
+        String query = "INSERT INTO omjmf6vzmpqpgc0p.transaction (group_id, date_created, transaction_content, amount) VALUES("
+                + group_id + ", NOW(), '" + transaction_content + "', " + amount + ")";
 
         try {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
 
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
 
             return 1;
         } catch (SQLException e) {
@@ -59,7 +59,7 @@ public class Transaction {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
 
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
 
             return 1;
         } catch (SQLException e) {

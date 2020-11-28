@@ -115,10 +115,10 @@ public class User {
             byte[] salt = new byte[1]; // same salt for all because we dont have time to implement security lmao
 
             KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 1024);
-            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512"); // using PBKDF2 with HMAC
+                                                                                             // and hashing alg SHA512
 
             byte[] hash = factory.generateSecret(spec).getEncoded();
-
             return hash.toString(); // 128 bytes, 11 characters stored as string in mysql
         } catch (InvalidKeySpecException e) {
             e.printStackTrace();
@@ -174,13 +174,13 @@ public class User {
                 // if phone number given, cool, if not, cool
                 String query;
                 if (phone_number != null) {
-                    query = "INSERT INTO omjmf6vzmpqpgc0p.user(first_name, last_name, "
+                    query = "INSERT INTO omjmf6vzmpqpgc0p.user (first_name, last_name, "
                             + "email, phone_number, address_id, username, hashed_password, birth_month, birth_day, birth_year) VALUES "
                             + "('" + first_name + "', '" + last_name + "', '" + email + "', '" + phone_number + "', "
                             + address_id + ", '" + username + "', '" + hashed_password + "', " + birth_month + ", "
                             + birth_day + ", " + birth_year + ", NOW())";
                 } else {
-                    query = "INSERT INTO omjmf6vzmpqpgc0p.user(first_name, last_name, "
+                    query = "INSERT INTO omjmf6vzmpqpgc0p.user (first_name, last_name, "
                             + "email, address_id, username, hashed_password, birth_month, birth_day, birth_year) VALUES "
                             + "('" + first_name + "', '" + last_name + "', '" + email + "', " + address_id + ", '"
                             + username + "', '" + hashed_password + "', " + birth_month + ", " + birth_day + ", "
@@ -191,7 +191,7 @@ public class User {
                     Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                             ResultSet.CONCUR_UPDATABLE);
 
-                    statement.executeQuery(query);
+                    statement.executeUpdate(query);
 
                     status = 3;
                 } catch (SQLException e) {
@@ -282,10 +282,10 @@ public class User {
         String query;
 
         if (zip_code != -1) {
-            query = "INSERT INTO omjmf6vzmpqpgc0p.address(street_name, zip_code, city_id, country_id) VALUES ('"
+            query = "INSERT INTO omjmf6vzmpqpgc0p.address (street_name, zip_code, city_id, country_id) VALUES ('"
                     + street_name + "', " + zip_code + ", " + city_id + ", " + country_id + ")";
         } else {
-            query = "INSERT INTO omjmf6vzmpqpgc0p.address(street_name, city_id, country_id) VALUES ('" + street_name
+            query = "INSERT INTO omjmf6vzmpqpgc0p.address (street_name, city_id, country_id) VALUES ('" + street_name
                     + ", " + city_id + ", " + country_id + ")";
 
         }
@@ -294,12 +294,16 @@ public class User {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
 
-            ResultSet rs = statement.executeQuery(query);
+            statement.executeUpdate(query);
 
             // gets last inserted key, aka the address id we just inserted into the table
-            rs = statement.getGeneratedKeys();
+
+            query = "SELECT LAST_INSERT_ID()";
+            ResultSet rs = statement.executeQuery(query);
+
+            // DOUBLE CHECK THIS SHIT
             if (rs.next())
-                return rs.getInt(1);
+                return Integer.parseInt(rs.getString("address_id"));
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -40,18 +40,20 @@ public class Message {
     private static int addMessageContent(String content, Connection connection) {
         String query;
 
-        query = "INSERT INTO omjmf6vzmpqpgc0p.message_content(content, date_sent) VALUES ('" + content + "', NOW())";
+        query = "INSERT INTO omjmf6vzmpqpgc0p.message_content (content, date_sent) VALUES ('" + content + "', NOW())";
 
         try {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
 
-            ResultSet rs = statement.executeQuery(query);
+            statement.executeUpdate(query);
 
+            query = "SELECT LAST_INSERTED_ID()";
+
+            ResultSet rs = statement.executeQuery(query);
             // gets last inserted key, aka the content id we just inserted into the table
-            rs = statement.getGeneratedKeys();
             if (rs.next())
-                return rs.getInt(1); // returns the message content id
+                return Integer.parseInt(rs.getString("message_content_id")); // returns the message content id
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,14 +64,14 @@ public class Message {
     private static int addMessage(int messageContentID, int group_id, int user_id, Connection connection) {
         String query;
 
-        query = "INSERT INTO omjmf6vzmpqpgc0p.message(message_content_id, group_id, user_id) VALUES ("
+        query = "INSERT INTO omjmf6vzmpqpgc0p.message (message_content_id, group_id, user_id) VALUES ("
                 + messageContentID + ", " + group_id + ", " + user_id + ", NOW())";
 
         try {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
 
-            statement.executeQuery(query);
+            statement.executeUpdate(query);
 
             return 1;
         } catch (SQLException e) {
