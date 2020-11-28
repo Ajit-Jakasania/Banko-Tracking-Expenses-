@@ -184,7 +184,7 @@ public class User {
      * @return
      */
     private static int getCountryId(String country_name, Connection connection) {
-        String query = "SELECT country_id FROM omjmf6vzmpqpgc0p.country WHERE country_name = " + country_name;
+        String query = "SELECT country_id FROM omjmf6vzmpqpgc0p.country WHERE country_name = '" + country_name + "'";
 
         try {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -211,7 +211,7 @@ public class User {
      * @return
      */
     private static int getCityId(String city_name, Connection connection) {
-        String query = "SELECT city_id FROM omjmf6vzmpqpgc0p.city WHERE city_name = " + city_name;
+        String query = "SELECT city_id FROM omjmf6vzmpqpgc0p.city WHERE city_name = '" + city_name + "'";
 
         try {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -272,7 +272,7 @@ public class User {
 
     private static boolean uniqueUsername(String username, Connection connection) throws SQLException {
         String usernameInDatabase = "";
-        String query = "SELECT username FROM omjmf6vzmpqpgc0p.user";
+        String query = "SELECT username FROM omjmf6vzmpqpgc0p.user WHERE username = '" + username + "'";
         try {
 
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -302,17 +302,6 @@ public class User {
 
         return false;
     }
-
-    // private static void getConnection() throws SQLException {
-    //
-    // if(connection==null)
-    // {
-    // (Connection) this.connection =
-    // DriverManager.getConnection("jdbc:mysql://y5s2h87f6ur56vae.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-    // "xeka86imtg04uaw8", "kj2wtrq16ce5fgdd");
-    // }
-    //
-    // }
 
     public static ArrayList getUserData(String username) throws SQLException {
 
