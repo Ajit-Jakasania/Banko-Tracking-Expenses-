@@ -155,15 +155,9 @@ public class User {
 
                     ResultSet rs = statement.executeQuery(query);
 
-                    // gets last inserted key, aka the address id we just inserted into the table
-                    rs = statement.getGeneratedKeys();
-                    if (rs.next())
-                        return rs.getInt(1);
-
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                return -1;
 
             } else {
                 // Return to front-end, username is not unique
