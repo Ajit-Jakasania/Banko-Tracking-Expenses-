@@ -1,7 +1,12 @@
 package com.example.banko;
 
+import java.security.*;
+import java.security.spec.*;
 import java.sql.*;
 import java.util.ArrayList;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 public class User {
 
@@ -105,6 +110,50 @@ public class User {
 
     }
 
+    public static String hashString(String password) {
+        try {
+            byte[] salt = new byte[1]; // same salt for all because we dont have time to implement security lmao
+
+            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 1024);
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
+
+            byte[] hash = factory.generateSecret(spec).getEncoded();
+
+            return hash.toString(); // 128 bytes, 11 characters stored as string in mysql
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException f) {
+            f.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static boolean authenticatePassword(String username, String password) {
+        String tempPw = hashString(password);
+        Connection connection = BankoBackendServer.connection;
+
+        String query = "SELECT hashed_password FROM omjmf6vzmpqpgc0p.user WHERE username = '" + username + "'";
+
+        try {
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet rs = statement.executeQuery(query);
+
+            // if they are equal, return true
+            if (rs.next())
+                if (rs.getString("hashed_password").equals(tempPw))
+                    return true;
+
+            return false;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public int registerUser() throws SQLException {
 
         int status = 0;
@@ -120,18 +169,7 @@ public class User {
                 // if zip empty, -1 sent to createAddressID
                 int address_id = createAddressID(country_id, city_id, street_name, zip_code, connection);
 
-                // Hashed password function which returns a string of 128 length, first 15 are
-                // the salt, then a $ as a delimiter, and then last 112 are the hashed pass. we
-                // store this as
-                // salt$hashedpassword
-                // this way the same password utilizing a different salt will look different in
-                // the db. To authenticate, we pull the hashed password, pull first half of the
-                // string using $ delimiter, then we hash the inputted password using the salt
-                // and the password input. If it equals the second half of the string past the $
-                // delimiter, then we have authentiated the pw
-
-                // suppose now the hased password is stored in the object variable
-                // hashed_password
+                String hashed_password = hashString(this.hashed_password);
 
                 // if phone number given, cool, if not, cool
                 String query;
