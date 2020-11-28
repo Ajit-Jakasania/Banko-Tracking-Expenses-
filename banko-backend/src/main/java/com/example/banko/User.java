@@ -153,7 +153,7 @@ public class User {
                     Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                             ResultSet.CONCUR_UPDATABLE);
 
-                    ResultSet rs = statement.executeQuery(query);
+                    statement.executeQuery(query);
 
                     status = 3;
                 } catch (SQLException e) {
