@@ -10,7 +10,10 @@ public class User {
     private String last_name;
     private String email;
     private String phone_number;
-    private int address_id;
+    private String street_name;
+    private int zip_code = -1; // default -1 b/c optional and int cannot be null
+    private String city_name;
+    private String country_name;
     private String username;
     private String hashed_password;
     private int birth_month;
@@ -18,14 +21,81 @@ public class User {
     private int birth_year;
     private String date_created;
 
-
-    public User(int user_id, String first_name, String last_name, String email, String phone_number, int address_id, String username, String hashed_password, int birth_month, int birth_day, int birth_year, String date_created) {
+    // all values sent in
+    public User(int user_id, String first_name, String last_name, String email, String phone_number, String street_name,
+            int zip_code, String city_name, String country_name, String username, String hashed_password,
+            int birth_month, int birth_day, int birth_year, String date_created) {
         this.user_id = user_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.phone_number = phone_number;
-        this.address_id = address_id;
+        this.street_name = street_name;
+        this.zip_code = zip_code;
+        this.city_name = city_name;
+        this.country_name = country_name;
+        this.username = username;
+        this.hashed_password = hashed_password;
+        this.birth_month = birth_month;
+        this.birth_day = birth_day;
+        this.birth_year = birth_year;
+        this.date_created = date_created;
+
+    }
+
+    // all values but phonenumber sent in
+    public User(int user_id, String first_name, String last_name, String email, String street_name, int zip_code,
+            String city_name, String country_name, String username, String hashed_password, int birth_month,
+            int birth_day, int birth_year, String date_created) {
+        this.user_id = user_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.street_name = street_name;
+        this.zip_code = zip_code;
+        this.city_name = city_name;
+        this.country_name = country_name;
+        this.username = username;
+        this.hashed_password = hashed_password;
+        this.birth_month = birth_month;
+        this.birth_day = birth_day;
+        this.birth_year = birth_year;
+        this.date_created = date_created;
+
+    }
+
+    // all values but zipcode sent in
+    public User(int user_id, String first_name, String last_name, String email, String phone_number, String street_name,
+            String city_name, String country_name, String username, String hashed_password, int birth_month,
+            int birth_day, int birth_year, String date_created) {
+        this.user_id = user_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone_number = phone_number;
+        this.street_name = street_name;
+        this.city_name = city_name;
+        this.country_name = country_name;
+        this.username = username;
+        this.hashed_password = hashed_password;
+        this.birth_month = birth_month;
+        this.birth_day = birth_day;
+        this.birth_year = birth_year;
+        this.date_created = date_created;
+
+    }
+
+    // all values but phone and zipcode sent in
+    public User(int user_id, String first_name, String last_name, String email, String street_name, String city_name,
+            String country_name, String username, String hashed_password, int birth_month, int birth_day,
+            int birth_year, String date_created) {
+        this.user_id = user_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.street_name = street_name;
+        this.city_name = city_name;
+        this.country_name = country_name;
         this.username = username;
         this.hashed_password = hashed_password;
         this.birth_month = birth_month;
@@ -39,44 +109,172 @@ public class User {
 
         int status = 0;
         Connection connection = BankoBackendServer.connection;
-        //Phone number is 11 digits
-        boolean checkPhoneNumber = false;
-        boolean uniUsername = false;
-        checkPhoneNumber = phoneNumberDigits(this.phone_number);
 
-        //Check if the username is unique
-        uniUsername = uniqueUsername(this.username, connection);
+        if (phone_number == null || phoneNumberDigits(this.phone_number)) { // phonenumber is optional
+            if (uniqueUsername(this.username, connection)) {
 
+                // gets our country and city ids, and then generates our address id.
+                int country_id = getCountryId(country_name, connection);
+                int city_id = getCityId(city_name, connection);
 
-        if(checkPhoneNumber)
-        {
-            if(uniUsername)
-            {
-                //Check the country_id and city_id that match from the country and city tables in MySQL
+                // if zip empty, -1 sent to createAddressID
+                int address_id = createAddressID(country_id, city_id, street_name, zip_code, connection);
 
-                //Hashed password function which returns a string of length 128
+                // Hashed password function which returns a string of 128 length, first 15 are
+                // the salt, then a $ as a delimiter, and then last 112 are the hashed pass. we
+                // store this as
+                // salt$hashedpassword
+                // this way the same password utilizing a different salt will look different in
+                // the db. To authenticate, we pull the hashed password, pull first half of the
+                // string using $ delimiter, then we hash the inputted password using the salt
+                // and the password input. If it equals the second half of the string past the $
+                // delimiter, then we have authentiated the pw
 
-                //Store the data in the user table in MySQL
-                //Check if the data was stored properly
-            }
-            else
-            {
-                //Return to front-end, username is not unique
+                // suppose now the hased password is stored in the object variable
+                // hashed_password
+
+                // if phone number given, cool, if not, cool
+                String query;
+                if (phone_number != null) {
+                    query = "INSERT INTO omjmf6vzmpqpgc0p.user(first_name, last_name, "
+                            + "email, phone_number, address_id, username, hashed_password, birth_month, birth_day, birth_year) VALUES "
+                            + "('" + first_name + "', '" + last_name + "', '" + email + "', '" + phone_number + "', "
+                            + address_id + ", '" + username + "', '" + hashed_password + "', " + birth_month + ", "
+                            + birth_day + ", " + birth_year + ", NOW())";
+                } else {
+                    query = "INSERT INTO omjmf6vzmpqpgc0p.user(first_name, last_name, "
+                            + "email, address_id, username, hashed_password, birth_month, birth_day, birth_year) VALUES "
+                            + "('" + first_name + "', '" + last_name + "', '" + email + "', " + address_id + ", '"
+                            + username + "', '" + hashed_password + "', " + birth_month + ", " + birth_day + ", "
+                            + birth_year + ", NOW())";
+                }
+
+                try {
+                    Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE);
+
+                    ResultSet rs = statement.executeQuery(query);
+
+                    // gets last inserted key, aka the address id we just inserted into the table
+                    rs = statement.getGeneratedKeys();
+                    if (rs.next())
+                        return rs.getInt(1);
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return -1;
+
+            } else {
+                // Return to front-end, username is not unique
                 status = 2;
                 return status;
             }
-        }
-        else
-        {
-            //Return to front-end, phoneNumber is not 11 digits
+        } else {
+            // Return to front-end, phoneNumber is not 11 digits
             status = 1;
             return status;
         }
 
-
-        //Return value to front-end, fail=0, pass=1
+        // Return value to front-end, fail=0, pass=1
 
         return status;
+    }
+
+    /**
+     * Gets the country id of the specified country, and returns it. If country not
+     * found, which should be impossible unless they are messing with the http
+     * request, then function returns -1
+     * 
+     * @param country_name
+     * @param connection
+     * @return
+     */
+    private static int getCountryId(String country_name, Connection connection) {
+        String query = "SELECT country_id FROM omjmf6vzmpqpgc0p.country WHERE country_name = " + country_name;
+
+        try {
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet rs = statement.executeQuery(query);
+
+            if (rs.next())
+                return Integer.parseInt(rs.getString("country_id"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
+     * Gets the city id of the specified city, and returns it. If city not found,
+     * which is impsosible unless they mess with http request, then returns -1 as
+     * error
+     * 
+     * @param city_name
+     * @param connection
+     * @return
+     */
+    private static int getCityId(String city_name, Connection connection) {
+        String query = "SELECT city_id FROM omjmf6vzmpqpgc0p.city WHERE city_name = " + city_name;
+
+        try {
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet rs = statement.executeQuery(query);
+
+            if (rs.next())
+                return Integer.parseInt(rs.getString("city_id"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
+     * Utilziing the address info, we make a new address input and return that id,
+     * or -1 if error
+     * 
+     * @param country_id
+     * @param city_id
+     * @param street_name
+     * @param zip_code
+     * @param connection
+     * @return
+     */
+    private static int createAddressID(int country_id, int city_id, String street_name, int zip_code,
+            Connection connection) {
+        String query;
+
+        if (zip_code != -1) {
+            query = "INSERT INTO omjmf6vzmpqpgc0p.address(street_name, zip_code, city_id, country_id) VALUES ('"
+                    + street_name + "', " + zip_code + ", " + city_id + ", " + country_id + ")";
+        } else {
+            query = "INSERT INTO omjmf6vzmpqpgc0p.address(street_name, city_id, country_id) VALUES ('" + street_name
+                    + ", " + city_id + ", " + country_id + ")";
+
+        }
+
+        try {
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet rs = statement.executeQuery(query);
+
+            // gets last inserted key, aka the address id we just inserted into the table
+            rs = statement.getGeneratedKeys();
+            if (rs.next())
+                return rs.getInt(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+
     }
 
     private static boolean uniqueUsername(String username, Connection connection) throws SQLException {
@@ -84,14 +282,13 @@ public class User {
         String query = "SELECT username FROM omjmf6vzmpqpgc0p.user";
         try {
 
-            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = statement.executeQuery(query);
-            while(rs.next())
-            {
+            while (rs.next()) {
                 usernameInDatabase = rs.getString("username");
-                if(usernameInDatabase.equals(username))
-                {
-                    //Username is not unique
+                if (usernameInDatabase.equals(username)) {
+                    // Username is not unique
                     return false;
                 }
             }
@@ -100,39 +297,38 @@ public class User {
             e.printStackTrace();
         }
 
-        //Username is unique
+        // Username is unique
 
         return true;
     }
 
-    private static boolean phoneNumberDigits(String phoneNumber)
-    {
-        if(phoneNumber.length()==11)
-        {
+    private static boolean phoneNumberDigits(String phoneNumber) {
+        if (phoneNumber.length() == 11) {
             return true;
         }
 
         return false;
     }
 
-//    private static void getConnection() throws SQLException {
-//
-//        if(connection==null)
-//        {
-//            (Connection) this.connection = DriverManager.getConnection("jdbc:mysql://y5s2h87f6ur56vae.cbetxkdyhwsb.us-east-1.rds.amazonaws.com", "xeka86imtg04uaw8", "kj2wtrq16ce5fgdd");
-//        }
-//
-//    }
+    // private static void getConnection() throws SQLException {
+    //
+    // if(connection==null)
+    // {
+    // (Connection) this.connection =
+    // DriverManager.getConnection("jdbc:mysql://y5s2h87f6ur56vae.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    // "xeka86imtg04uaw8", "kj2wtrq16ce5fgdd");
+    // }
+    //
+    // }
 
     public static ArrayList getUserData(String username) throws SQLException {
 
         ArrayList<String> user = new ArrayList<>();
         Connection connection = BankoBackendServer.connection;
-        String selectSql = "SELECT * FROM omjmf6vzmpqpgc0p.user WHERE username='"+username+"'";
+        String selectSql = "SELECT * FROM omjmf6vzmpqpgc0p.user WHERE username='" + username + "'";
         Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = statement.executeQuery(selectSql);
-        while(rs.next())
-        {
+        while (rs.next()) {
             user.add(Integer.toString(rs.getInt("user_id")));
             user.add(rs.getString("first_name"));
             user.add(rs.getString("last_name"));
@@ -188,14 +384,6 @@ public class User {
 
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
-    }
-
-    public int getAddress_id() {
-        return address_id;
-    }
-
-    public void setAddress_id(int address_id) {
-        this.address_id = address_id;
     }
 
     public String getUsername() {
