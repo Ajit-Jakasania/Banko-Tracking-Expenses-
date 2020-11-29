@@ -8,10 +8,16 @@ public class Transaction {
     private String transaction_content;
     private double amount;
 
+    private int transaction_id;
+
     public Transaction(int group_id, String transaction_content, double amount) {
         this.group_id = group_id;
         this.transaction_content = transaction_content;
         this.amount = amount;
+    }
+
+    public Transaction(int transaction_id) {
+        this.transaction_id = transaction_id;
     }
 
     /**
@@ -50,11 +56,11 @@ public class Transaction {
      * @return
      * @throws SQLException
      */
-    public int closeTransaction(int transaction_id) throws SQLException {
+    public int closeTransaction() throws SQLException {
         Connection connection = BankoBackendServer.connection;
 
         String query = "UPDATE omjmf6vzmpqpgc0p.transaction SET date_closed = NOW() WHERE transaction_id = "
-                + transaction_id;
+                + this.transaction_id;
         try {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
