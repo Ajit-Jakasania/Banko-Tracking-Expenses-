@@ -29,10 +29,11 @@ public class CreateTransactionController {
             return "Transaction not made";
     }
 
+    @PostMapping(value = "/bill")
     public @ResponseBody String addBill(@RequestBody Bill bill) {
         int status = 0;
         try {
-            bill.createBill();
+            status = bill.createBill();
         } catch (SQLException e) {
             e.printStackTrace();
         }

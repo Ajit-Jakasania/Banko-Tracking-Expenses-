@@ -20,8 +20,8 @@ public class Bill {
     public int createBill() throws SQLException {
         Connection connection = BankoBackendServer.connection;
 
-        String query = "INSERT INTO bill (transaction_id, photo_url) VALUES (" + transaction_id + ", '" + photo_url
-                + "')";
+        String query = "INSERT INTO omjmf6vzmpqpgc0p.bill (transaction_id, photo_url) VALUES (" + transaction_id + ", '"
+                + photo_url + "')";
 
         try {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -30,6 +30,7 @@ public class Bill {
             statement.executeUpdate(query);
 
             return 1;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

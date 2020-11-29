@@ -8,58 +8,58 @@ public class CreateBankingGroup {
     private String group_name;
     private String date_created;
     private int user_id;
-    private String useranme;
+    private String username;
 
-    public CreateBankingGroup(String group_name, String useranme) {
+    public CreateBankingGroup(String group_name, String username) {
         this.group_name = group_name;
-        this.useranme = useranme;
+        this.username = username;
     }
 
-    public CreateBankingGroup(int group_id, String group_name, String date_created, int user_id, String useranme) {
+    public CreateBankingGroup(int group_id, String group_name, int user_id) {
         this.group_id = group_id;
         this.group_name = group_name;
-        this.date_created = date_created;
         this.user_id = user_id;
-        this.useranme = useranme;
     }
 
     public int createBankGroup() throws SQLException {
 
         int groupCreated = 0;
         Connection connection = BankoBackendServer.connection;
-        user_id = getUserId(this.useranme, connection);
+        user_id = getUserId(this.username, connection);
         if (uniqueGroup(group_name, connection)) {
             // Group is created
             if (createGroup(group_name, connection)) {
                 group_id = getGroupId(group_name, connection);
-                if (userJoinGroup(user_id, group_id, connection)) {
+                if (userJoinGroup()) {
                     // User join the group created
                     groupCreated = 1;
                 }
             }
         } else {
             // Group name is not unique
-            groupCreated = 2;
+            groupCreated = -1;
         }
 
-        connection.close();
         return groupCreated;
     }
 
-    private boolean userJoinGroup(int user_id, int group_id, Connection connection) {
-        boolean flag = false;
-        String query = "INSERT INTO user_in_group(user_id, group_id,date_joined) VALUES (" + user_id + "," + group_id
-                + ", now())";
-        Statement statement;
+    public boolean userJoinGroup() throws SQLException {
+        Connection connection = BankoBackendServer.connection;
+
+        String query = "INSERT INTO user_in_group (user_id, group_id,date_joined) VALUES (" + this.user_id + ","
+                + this.group_id + ", now())";
+
         try {
-            statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            statement.execute(query);
-            flag = true;
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            statement.executeUpdate(query);
+
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        return flag;
+        return false;
     }
 
     private boolean createGroup(String group_name, Connection connection) {
@@ -79,27 +79,23 @@ public class CreateBankingGroup {
     }
 
     private boolean uniqueGroup(String group_name, Connection connection) {
-        String groupInDatabase = "";
-        String query = "SELECT group_name FROM omjmf6vzmpqpgc0p.group_list";
+        String query = "SELECT group_name FROM omjmf6vzmpqpgc0p.group_list WHERE group_name = '" + group_name + "'";
         try {
 
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = statement.executeQuery(query);
-            while (rs.next()) {
-                groupInDatabase = rs.getString("group_name");
-                if (groupInDatabase.equals(group_name)) {
-                    // Username is not unique
-                    return false;
-                }
+            if (rs.next()) {
+                return true;
             }
+            return false;
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        // Username is unique
-        return true;
+        return false;
+
     }
 
     private int getGroupId(String group_name, Connection connection) {
@@ -174,11 +170,11 @@ public class CreateBankingGroup {
         this.user_id = user_id;
     }
 
-    public String getUseranme() {
-        return useranme;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUseranme(String useranme) {
-        this.useranme = useranme;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
