@@ -1,7 +1,10 @@
 package com.example.banko;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserRegistrationController {
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -20,14 +23,24 @@ public class UserRegistrationController {
      * List the user details
      */
     @GetMapping(value = "/user")
-    public @ResponseBody ArrayList<String> getUser(@RequestParam(required = false, defaultValue = "") String username) {
-        ArrayList<String> user = new ArrayList<>();
+    public @ResponseBody String getUser(@RequestParam(required = false, defaultValue = "") String username) {
+        HashMap<String, String> user = new HashMap<String, String>();
+        String json = null;
+
         try {
             user = User.getUserData(username);
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return user;
+
+        try {
+            json = new ObjectMapper().writeValueAsString(user);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
     /*
