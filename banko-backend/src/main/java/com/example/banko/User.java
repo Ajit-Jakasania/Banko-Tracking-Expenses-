@@ -2,6 +2,7 @@ package com.example.banko;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class User {
 
@@ -351,29 +352,35 @@ public class User {
         return false;
     }
 
-    public static ArrayList getUserData(String username) throws SQLException {
+    public static HashMap<String, String> getUserData(String username) throws SQLException {
 
-        ArrayList<String> user = new ArrayList<>();
         Connection connection = BankoBackendServer.connection;
+
+        // TODO: try catch block
         String selectSql = "SELECT * FROM omjmf6vzmpqpgc0p.user WHERE username='" + username + "'";
         Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = statement.executeQuery(selectSql);
-        while (rs.next()) {
-            user.add(Integer.toString(rs.getInt("user_id")));
-            user.add(rs.getString("first_name"));
-            user.add(rs.getString("last_name"));
-            user.add(rs.getString("email"));
-            user.add(rs.getString("phone_number"));
-            user.add(Integer.toString(rs.getInt("address_id")));
-            user.add(rs.getString("username"));
-            user.add(rs.getString("hashed_password"));
-            user.add(Integer.toString(rs.getInt("birth_month")));
-            user.add(Integer.toString(rs.getInt("birth_day")));
-            user.add(Integer.toString(rs.getInt("birth_year")));
-            user.add(rs.getTimestamp("date_created").toString());
+
+        HashMap<String, String> userJSON = new HashMap<String, String>();
+
+        if (rs.next()) {
+            userJSON.put("user_id", Integer.toString(rs.getInt("user_id")));
+            userJSON.put("first_name", (rs.getString("first_name")));
+            userJSON.put("last_name", (rs.getString("last_name")));
+            userJSON.put("email", (rs.getString("email")));
+            userJSON.put("phone_number", (rs.getString("phone_number")));
+            userJSON.put("address_id", (Integer.toString(rs.getInt("address_id"))));
+            userJSON.put("username", (rs.getString("username")));
+            userJSON.put("hashed_password", (rs.getString("hashed_password")));
+            userJSON.put("birth_month", (Integer.toString(rs.getInt("birth_month"))));
+            userJSON.put("birth_day", (Integer.toString(rs.getInt("birth_day"))));
+            userJSON.put("birth_year", (Integer.toString(rs.getInt("birth_year"))));
+            userJSON.put("date_created", (rs.getString("date_created")));
+
         }
         statement.close();
-        return user;
+
+        return userJSON;
     }
 
     public String getFirst_name() {
