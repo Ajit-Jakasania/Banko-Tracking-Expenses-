@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UserGroup {
 
@@ -12,30 +13,23 @@ public class UserGroup {
     private int group_id;
 
 
-    public static ArrayList getUserGroup(String username) throws SQLException {
+    public static ArrayList<HashMap<String,String>> getUserGroup(String username) throws SQLException {
         Connection connection = BankoBackendServer.connection;
+        ArrayList<HashMap<String,String>> listGroups = new ArrayList<HashMap<String,String>>();
+        HashMap<String, String> userGroupJSON = new HashMap<String, String>();
         int user_id = getUserId(username,connection);
-
-        ArrayList<String> user = new ArrayList<>();
-        String selectSql = "SELECT * FROM omjmf6vzmpqpgc0p.user WHERE username='" + username + "'";
+        String selectSql = "SELECT group_id, group_name, date_created, date_joined FROM omjmf6vzmpqpgc0p.user_in_group JOIN omjmf6vzmpqpgc0p.group_list USING (group_id) WHERE user_id =" + user_id ;
         Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = statement.executeQuery(selectSql);
         while (rs.next()) {
-            user.add(Integer.toString(rs.getInt("user_id")));
-            user.add(rs.getString("first_name"));
-            user.add(rs.getString("last_name"));
-            user.add(rs.getString("email"));
-            user.add(rs.getString("phone_number"));
-            user.add(Integer.toString(rs.getInt("address_id")));
-            user.add(rs.getString("username"));
-            user.add(rs.getString("hashed_password"));
-            user.add(Integer.toString(rs.getInt("birth_month")));
-            user.add(Integer.toString(rs.getInt("birth_day")));
-            user.add(Integer.toString(rs.getInt("birth_year")));
-            user.add(rs.getTimestamp("date_created").toString());
+            userGroupJSON.put("group_id",Integer.toString(rs.getInt("group_id")));
+            userGroupJSON.put("group_name",rs.getString("group_name"));
+            userGroupJSON.put("date_created", (rs.getString("date_created")));
+            userGroupJSON.put("date_joined", (rs.getString("date_joined")));
+            listGroups.add(userGroupJSON);
         }
         statement.close();
-        return user;
+        return listGroups;
     }
 
     private static int getUserId(String username, Connection connection) {
