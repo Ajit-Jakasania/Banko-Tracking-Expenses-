@@ -1,5 +1,5 @@
   
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import $ from 'jquery'
 
@@ -8,6 +8,7 @@ import styles from './FieldList.module.css'
 function FieldList() {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
 
+    //const [returnValue, setReturnValue] = useState("hihihi");
     const onSubmit = (jsonData) => {
 
         $.ajax({
@@ -19,6 +20,7 @@ function FieldList() {
             success: function (retValue) {
 
                 console.log(retValue);
+                //setReturnValue(retValue);
             },
             error: function (request, status, error) {
                 console.log(request.responseText);
@@ -64,7 +66,7 @@ function FieldList() {
                     <li><input placeholder="Username" name="username" ref={register({ required: true })} /></li>
                     {errors.username && 'username is required.'}
 
-                    <li><input placeholder="Password" name="hashed_password" ref={register({ required: true })} /></li>
+                    <li><input type="password" placeholder="Password" name="hashed_password" ref={register({ required: true })} /></li>
                     {errors.hashed_password && 'Password is required.'}
 
                     <li><input placeholder="Birth Month" name="birth_month" ref={register({ required: true, pattern: /\d+/ })} /></li>
@@ -76,7 +78,9 @@ function FieldList() {
                     <li><input placeholder="Birth Year" name="birth_year" ref={register({ required: true, pattern: /\d+/ })} /></li>
                     {errors.birth_year && 'Please enter number for year.'}
 
-                    <input type="submit" />
+                    <li><input type="submit" /></li>
+
+
                 </ul>
 
             </form>

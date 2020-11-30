@@ -18,11 +18,11 @@ function Navbar() {
             <div className={styles.Navbar}>
                 <Button text="Home" link="/" />
                 <Logo />
-                <ButtonContainer text="Log In" link='/logIn' /> 
+                <ButtonContainer text="Log In" link='/logIn/23test/Osama' /> 
                 <ButtonContainer text="Register" link='/Register' />
             </ div>
             <Route exact path="/" component={TestHomePage} /> 
-            <Route exact path="/logIn" component={LoginPage} /> 
+            <Route exact path="/logIn/:number/:username" component={LoginPage} /> 
             <Route exact path="/Register" component={RegisterPage} /> 
         </Router>
     );
