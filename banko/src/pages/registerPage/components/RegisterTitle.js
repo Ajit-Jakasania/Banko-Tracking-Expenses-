@@ -7,7 +7,7 @@ function RegisterTitle()
 {
     
     return(
-        <div class={styles.register_title}>
+        <div className={styles.register_title}>
             <FieldList />
         </div>
     );
