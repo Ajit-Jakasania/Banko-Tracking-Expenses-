@@ -7,7 +7,6 @@ public class UserLogIn {
     private String username;
     private String hashed_password;
 
-
     public UserLogIn(String username, String hashed_password) {
         this.username = username;
         this.hashed_password = hashed_password;
@@ -15,32 +14,30 @@ public class UserLogIn {
 
     public boolean loginUser() throws SQLException {
 
-        boolean login = false;
-        Connection connection = getConnection();
-        if (checkIfPasswordsMatch(username, hashed_password, connection)) {
+        if (checkIfPasswordsMatch(username, hashed_password)) {
             // logged in
-            login = true;
+            return true;
         } else {
-            //throw error
+            // throw error
         }
-        connection.close();
-        return login;
+        return false;
     }
 
-    private String getStoredPassword(String username, Connection connection) {
+    private String getStoredPassword(String username) {
+        Connection connection = BankoBackendServer.connection;
 
         String pw = null;
-        String query = "SELECT password FROM database.user WHERE username = '" + username + "'";
-        Statement statement;
+        String query = "SELECT hashed_password FROM omjmf6vzmpqpgc0p.user WHERE username = '" + username + "'";
 
         try {
-            statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = statement.executeQuery(query);
 
             rs.next();
 
-            pw = rs.getString("password");
+            pw = rs.getString("hashed_password");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,21 +46,19 @@ public class UserLogIn {
         return pw;
     }
 
-    private boolean checkIfPasswordsMatch(String username, String password, Connection connection) {
-        //hash the input password
-        String hashed_pass = "";
-        //hashed_pass = hash(password);
-        String pw = getStoredPassword(username, connection);
+    private boolean checkIfPasswordsMatch(String username, String password) {
 
+<<<<<<< HEAD
         if (pw.equals(User.hashString(hashed_pass)))
+=======
+        // hashed_pass = hash(password);
+        String pw = getStoredPassword(username);
+
+        if (pw.equals(User.hashString(password)))
+>>>>>>> 7307954f29e522b0c308832681e3b61dc8082422
             return true;
 
         return false;
-    }
-
-    private static Connection getConnection() throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:mysql://y5s2h87f6ur56vae.cbetxkdyhwsb.us-east-1.rds.amazonaws.com", "xeka86imtg04uaw8", "kj2wtrq16ce5fgdd");
-        return connection;
     }
 
     public String getUsername() {
