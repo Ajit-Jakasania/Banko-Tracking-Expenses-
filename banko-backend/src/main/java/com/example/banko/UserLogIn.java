@@ -55,7 +55,7 @@ public class UserLogIn {
         //hashed_pass = hash(password);
         String pw = getStoredPassword(username, connection);
 
-        if (pw == hashed_pass)
+        if (pw.equals(User.hashString(hashed_pass)))
             return true;
 
         return false;

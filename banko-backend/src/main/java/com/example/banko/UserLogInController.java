@@ -26,7 +26,7 @@ public class UserLogInController {
 
     // Check the login details of the user
     @PostMapping(value = "/userLogIn")
-    public @ResponseBody String addNewUser(@RequestBody UserLogIn userLogIn) {
+    public @ResponseBody String userLogin(@RequestBody UserLogIn userLogIn) {
         boolean login = false;
         try {
             login = userLogIn.loginUser();
