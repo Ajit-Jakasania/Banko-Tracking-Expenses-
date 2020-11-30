@@ -48,14 +48,10 @@ public class UserLogIn {
 
     private boolean checkIfPasswordsMatch(String username, String password) {
 
-<<<<<<< HEAD
-        if (pw.equals(User.hashString(hashed_pass)))
-=======
         // hashed_pass = hash(password);
         String pw = getStoredPassword(username);
 
         if (pw.equals(User.hashString(password)))
->>>>>>> 7307954f29e522b0c308832681e3b61dc8082422
             return true;
 
         return false;
