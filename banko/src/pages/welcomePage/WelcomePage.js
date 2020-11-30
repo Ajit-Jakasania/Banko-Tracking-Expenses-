@@ -8,25 +8,27 @@ import $ from "jquery"
 
 
 
-function WelcomePage() {
+function WelcomePage({ props }) {
 
-    useEffect(() => {
-        $.ajax({
-            contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/userGroups',
-            type: 'get',
-            dataType: 'json',
-            data: { username: "user1" },
-            success: function (data) {
+    // useEffect(() => {
+    //     $.ajax({
+    //         contentType: "application/json;charset=utf-8",
+    //         url: 'http://localhost:8080/userGroups',
+    //         type: 'get',
+    //         dataType: 'json',
+    //         data: { username: "user1" },
+    //         success: function (data) {
 
-                console.log(data);
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            }
+    //             console.log(data);
+    //         },
+    //         error: function (request, status, error) {
+    //             console.log(request.responseText);
+    //         }
 
-        });
-    })
+    //     });
+    // })
+
+
 
     return (
         <div>

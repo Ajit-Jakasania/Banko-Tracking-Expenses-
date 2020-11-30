@@ -1,5 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
+import { useState } from 'react';
 
 import WelcomePage from './pages/welcomePage/WelcomePage'
 import LoginPage from './pages/loginPage/LoginPage'
@@ -12,12 +13,11 @@ import './App.css';
 
 
 function App() {
-  return (
-    <div className="App">
 
-      <RegisterPage />
-    </div>
-  );
+
+
+  return (<div className="App"><WelcomePage /></div>);
+
 }
 
 export default App;
