@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar/Navbar'
 import RegisterContainer from './components/RegisterContainer';
 import Footer from '../../components/Footer/Footer'
 
+/*
 function RegisterPage()
 {
     return (
@@ -14,5 +15,13 @@ function RegisterPage()
         </div>
     )
 }
-
+*/
+function RegisterPage()
+{
+    return (
+        <div>
+            <RegisterContainer/>
+        </div>
+    )
+}
 export default RegisterPage;

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link, Route } from 'react-router-dom';
+import WelcomePage from '../../../pages/welcomePage/WelcomePage';
 
 
 import styles from './Button.module.css';
@@ -6,7 +8,7 @@ import styles from './Button.module.css';
 function Button({ text, link }) {
     return (
         <div className={styles.Button}>
-            <a className={styles.active} href={link}>{text}</a>
+            <Link to={link}>{text}</Link>
 
         </ div>
     );

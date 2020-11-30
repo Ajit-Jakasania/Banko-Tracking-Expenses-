@@ -15,3 +15,9 @@ ul.list li input{
     background-color: #d3d3d3;
     border-radius: 5px;
 }
+/*
+.FieldList {
+    display:flex;
+    flex-direction: column;
+}
+*/
