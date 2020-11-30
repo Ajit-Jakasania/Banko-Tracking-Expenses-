@@ -7,36 +7,24 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserLogInController {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
     @CrossOrigin
 
-    /*
-     * List the user details
-     */
-    // @GetMapping(value = "/userLogIn")
-    // public @ResponseBody
-    // ArrayList<String> getUser(@RequestParam(required = false, defaultValue = "")
-    // String username) {
-    //
-    // }
-
     // Check the login details of the user
     @PostMapping(value = "/userLogIn")
-    public @ResponseBody String userLogin(@RequestBody UserLogIn userLogIn) {
-        boolean login = false;
+    public @ResponseBody int userLogin(@RequestBody UserLogIn userLogIn) {
+        int id = -1;
         try {
-            login = userLogIn.loginUser();
+            id = userLogIn.loginUser();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        if (login)
-            return "Login Successfully";
-        else
-            return "Login Failed! Check your username and password again!";
+
+        return id;
     }
 
 }
