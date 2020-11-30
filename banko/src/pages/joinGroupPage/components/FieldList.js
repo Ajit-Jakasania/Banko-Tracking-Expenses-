@@ -33,8 +33,8 @@ function FieldList()
         
         <div>
             <form className={styles.FieldList} onSubmit={handleSubmit(onSubmit)}>
-                <input placeholder="First Name" name="first_name" ref={joinGroup({ required: true })} />
-                {errors.first_name && 'First name is required.'}
+                <input placeholder="Group Name" name="group_name" ref={joinGroup({ required: true })} />
+                {errors.first_name && 'Group name is required.'}
          <input type="submit" />
 
          </form>
