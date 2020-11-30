@@ -1,16 +1,10 @@
 package com.example.banko;
 
-import java.security.*;
-import java.security.spec.*;
 import java.sql.*;
 import java.util.ArrayList;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-
 public class User {
 
-    private int user_id;
     private String first_name;
     private String last_name;
     private String email;
@@ -26,11 +20,26 @@ public class User {
     private int birth_year;
     private String date_created;
 
+    public User() {
+        this.first_name = null;
+        this.last_name = null;
+        this.email = null;
+        this.phone_number = null;
+        this.street_name = null;
+        this.zip_code = -1;
+        this.city_name = null;
+        this.country_name = null;
+        this.username = null;
+        this.hashed_password = null;
+        this.birth_month = -1;
+        this.birth_day = -1;
+        this.birth_year = -1;
+    }
+
     // all values sent in
-    public User(int user_id, String first_name, String last_name, String email, String phone_number, String street_name,
+    public User(String first_name, String last_name, String email, String phone_number, String street_name,
             int zip_code, String city_name, String country_name, String username, String hashed_password,
-            int birth_month, int birth_day, int birth_year, String date_created) {
-        this.user_id = user_id;
+            int birth_month, int birth_day, int birth_year) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -44,15 +53,13 @@ public class User {
         this.birth_month = birth_month;
         this.birth_day = birth_day;
         this.birth_year = birth_year;
-        this.date_created = date_created;
 
     }
 
     // all values but phonenumber sent in
-    public User(int user_id, String first_name, String last_name, String email, String street_name, int zip_code,
-            String city_name, String country_name, String username, String hashed_password, int birth_month,
-            int birth_day, int birth_year, String date_created) {
-        this.user_id = user_id;
+    public User(String first_name, String last_name, String email, String street_name, int zip_code, String city_name,
+            String country_name, String username, String hashed_password, int birth_month, int birth_day,
+            int birth_year) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -65,15 +72,13 @@ public class User {
         this.birth_month = birth_month;
         this.birth_day = birth_day;
         this.birth_year = birth_year;
-        this.date_created = date_created;
 
     }
 
     // all values but zipcode sent in
-    public User(int user_id, String first_name, String last_name, String email, String phone_number, String street_name,
+    public User(String first_name, String last_name, String email, String phone_number, String street_name,
             String city_name, String country_name, String username, String hashed_password, int birth_month,
-            int birth_day, int birth_year, String date_created) {
-        this.user_id = user_id;
+            int birth_day, int birth_year) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -86,15 +91,13 @@ public class User {
         this.birth_month = birth_month;
         this.birth_day = birth_day;
         this.birth_year = birth_year;
-        this.date_created = date_created;
 
     }
 
     // all values but phone and zipcode sent in
-    public User(int user_id, String first_name, String last_name, String email, String street_name, String city_name,
+    public User(String first_name, String last_name, String email, String street_name, String city_name,
             String country_name, String username, String hashed_password, int birth_month, int birth_day,
-            int birth_year, String date_created) {
-        this.user_id = user_id;
+            int birth_year) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -106,27 +109,29 @@ public class User {
         this.birth_month = birth_month;
         this.birth_day = birth_day;
         this.birth_year = birth_year;
-        this.date_created = date_created;
 
     }
 
+    /**
+     * bullshit hash fucntion
+     * 
+     * @param password
+     * @return
+     */
     public static String hashString(String password) {
-        try {
-            byte[] salt = new byte[1]; // same salt for all because we dont have time to implement security lmao
 
-            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 65536, 1024);
-            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512"); // using PBKDF2 with HMAC
-                                                                                             // and hashing alg SHA512
+        char[] temp = password.toCharArray();
+        int asciiArr[];
+        asciiArr = new int[temp.length];
 
-            byte[] hash = factory.generateSecret(spec).getEncoded();
-            return hash.toString(); // 128 bytes, 11 characters stored as string in mysql
-        } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException f) {
-            f.printStackTrace();
+        String returnVal = "";
+
+        for (int i = 0; i < temp.length; i++) {
+            asciiArr[i] = temp[i] * 3 - 2;
+            returnVal += (char) asciiArr[i];
         }
 
-        return null;
+        return returnVal;
     }
 
     public static boolean authenticatePassword(String username, String password) {
@@ -160,7 +165,7 @@ public class User {
         Connection connection = BankoBackendServer.connection;
 
         if (phone_number == null || phoneNumberDigits(this.phone_number)) { // phonenumber is optional
-            if (uniqueUsername(this.username, connection)) {
+            if (uniqueUsername(this.username)) {
 
                 // gets our country and city ids, and then generates our address id.
                 int country_id = getCountryId(country_name, connection);
@@ -175,13 +180,13 @@ public class User {
                 String query;
                 if (phone_number != null) {
                     query = "INSERT INTO omjmf6vzmpqpgc0p.user (first_name, last_name, "
-                            + "email, phone_number, address_id, username, hashed_password, birth_month, birth_day, birth_year) VALUES "
+                            + "email, phone_number, address_id, username, hashed_password, birth_month, birth_day, birth_year, date_created) VALUES "
                             + "('" + first_name + "', '" + last_name + "', '" + email + "', '" + phone_number + "', "
                             + address_id + ", '" + username + "', '" + hashed_password + "', " + birth_month + ", "
                             + birth_day + ", " + birth_year + ", NOW())";
                 } else {
                     query = "INSERT INTO omjmf6vzmpqpgc0p.user (first_name, last_name, "
-                            + "email, address_id, username, hashed_password, birth_month, birth_day, birth_year) VALUES "
+                            + "email, address_id, username, hashed_password, birth_month, birth_day, birth_year, date_created) VALUES "
                             + "('" + first_name + "', '" + last_name + "', '" + email + "', " + address_id + ", '"
                             + username + "', '" + hashed_password + "', " + birth_month + ", " + birth_day + ", "
                             + birth_year + ", NOW())";
@@ -286,7 +291,7 @@ public class User {
                     + street_name + "', " + zip_code + ", " + city_id + ", " + country_id + ")";
         } else {
             query = "INSERT INTO omjmf6vzmpqpgc0p.address (street_name, city_id, country_id) VALUES ('" + street_name
-                    + ", " + city_id + ", " + country_id + ")";
+                    + "', " + city_id + ", " + country_id + ")";
 
         }
 
@@ -303,7 +308,7 @@ public class User {
 
             // DOUBLE CHECK THIS SHIT
             if (rs.next())
-                return Integer.parseInt(rs.getString("address_id"));
+                return rs.getInt(1);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -312,7 +317,8 @@ public class User {
 
     }
 
-    private static boolean uniqueUsername(String username, Connection connection) throws SQLException {
+    private static boolean uniqueUsername(String username) throws SQLException {
+        Connection connection = BankoBackendServer.connection;
         String usernameInDatabase = "";
         String query = "SELECT username FROM omjmf6vzmpqpgc0p.user WHERE username = '" + username + "'";
         try {
@@ -368,14 +374,6 @@ public class User {
         }
         statement.close();
         return user;
-    }
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
     }
 
     public String getFirst_name() {
