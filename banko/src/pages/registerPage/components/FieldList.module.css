@@ -1,10 +1,10 @@
 
-<<<<<<< HEAD
+
 .FieldList {
     display:flex;
     flex-direction: column;
 }
-=======
+
 ul.list{
     list-style-type: none;
     text-align: center;
@@ -24,4 +24,3 @@ ul.list li input{
     flex-direction: column;
 }
 */
->>>>>>> 86f3c0b8a23b1ffe650808700285fc749e7ebceb

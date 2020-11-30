@@ -13,29 +13,9 @@ import RegisterPage from './../registerPage/RegisterPage'
 
 function WelcomePage() {
 
-<<<<<<< HEAD
-    useEffect(() => {
-        $.ajax({
-            contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/userGroups',
-            type: 'get',
-            dataType: 'json',
-            data: { username: "user1" },
-            success: function (data) {
-
-                console.log(data);
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            }
-
-        });
-    })
-=======
     //const [count, setCount] = useState(0);
     //const [userID, setUserID] = useState(0);
     //const [firstname, setFirstname] = useState(0);
->>>>>>> 86f3c0b8a23b1ffe650808700285fc749e7ebceb
 
     return (
         <div>
