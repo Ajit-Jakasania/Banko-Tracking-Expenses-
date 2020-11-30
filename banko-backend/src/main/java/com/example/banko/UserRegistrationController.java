@@ -50,7 +50,7 @@ public class UserRegistrationController {
      * 
      * 
      */
-    @PostMapping(value = "/user")
+    @PostMapping(value = "/userRegister")
     public @ResponseBody String addNewUser(@RequestBody User user) {
         int status = 0;
         try {
