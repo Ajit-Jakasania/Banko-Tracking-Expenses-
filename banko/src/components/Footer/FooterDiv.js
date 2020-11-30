@@ -6,7 +6,7 @@ import styles from './FooterDiv.module.css'
 function FooterDiv({ text }) {
     return (
         <div className={styles.FooterDiv}>
-            <a><i class="fab fa-github"></i>{text}</a>
+            <a><i className="fab fa-github"></i>{text}</a>
         </div>
     );
 }
