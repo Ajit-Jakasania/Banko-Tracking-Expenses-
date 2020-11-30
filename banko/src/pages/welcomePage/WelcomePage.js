@@ -13,10 +13,10 @@ function WelcomePage() {
     useEffect(() => {
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/user',
+            url: 'http://localhost:8080/userGroups',
             type: 'get',
             dataType: 'json',
-            data: { username: "osama10000" },
+            data: { username: "user1" },
             success: function (data) {
 
                 console.log(data);
