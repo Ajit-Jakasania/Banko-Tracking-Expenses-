@@ -9,16 +9,11 @@ function FieldList()
     
     return(
         <ul className={styles}>
-            <li>User Login</li>
+            <li>Join Group</li>
             <li><input 
                     type="text" 
-                    name="UserName" 
-                    placeholder="Username"
-                /></li>
-            <li><input 
-                    type="password" 
-                    name="Password" 
-                    placeholder="..."
+                    name="GroupName" 
+                    placeholder="Enter Group Name"
                 /></li>
             <li><InputButton text="Submit"/></li>
         </ul> 

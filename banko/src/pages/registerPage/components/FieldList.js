@@ -8,7 +8,7 @@ function FieldList()
 {
     
     return(
-        <ul class={styles.FieldList}>
+        <ul className={styles.FieldList}>
             <li>Register</li>
             <li><input 
                     type="text" 
