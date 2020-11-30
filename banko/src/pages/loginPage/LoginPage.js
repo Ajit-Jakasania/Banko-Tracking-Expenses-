@@ -6,16 +6,19 @@ import Footer from '../../components/Footer/Footer'
 
 
 
-function LoginPage() {
+function LoginPage(props) {
     return (
         <div>
-            <Navbar />
+            <p>hi this should be: {props.match.params.number}</p>
             <LoginContainer />
-            <Footer />
         </div>
     )
 }
 
+/*
+<p>hi this should be: {props.match.params.number}</p>
+            <p>hi this should be: {props.match.params.username}</p>
+            */
 
 
 export default LoginPage;

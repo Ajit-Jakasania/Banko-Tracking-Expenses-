@@ -29,6 +29,6 @@ public class CreateBankingGroupController {
         else if (status == 2)
             return "Failed as group name is not unique!";
 
-        return "";
+        return "Check createBankController post method (backend)";
     }
 }

@@ -1,5 +1,27 @@
 
+<<<<<<< HEAD
 .FieldList {
     display:flex;
     flex-direction: column;
 }
+=======
+ul.list{
+    list-style-type: none;
+    text-align: center;
+}
+
+ul.list li input{
+    width: 250px;
+    text-align: center;
+    padding: 8px 0px;
+    border: none;
+    background-color: #d3d3d3;
+    border-radius: 5px;
+}
+/*
+.FieldList {
+    display:flex;
+    flex-direction: column;
+}
+*/
+>>>>>>> 86f3c0b8a23b1ffe650808700285fc749e7ebceb

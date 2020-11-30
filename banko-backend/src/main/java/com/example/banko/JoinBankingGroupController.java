@@ -21,15 +21,10 @@ public class JoinBankingGroupController {
             if (createBankingGroup.userJoinGroup())
                 return "User joined group successfully";
             else
-                return "User not joined successfully";
+                return "User failed to join group: Check group_name entered!";
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-        if (status == 1)
-            return "Transaction made";
-        else
-            return "Transaction not made";
+        return "Check joinGroupController post method (backend)";
     }
-
 }
