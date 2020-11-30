@@ -12,16 +12,17 @@ function WelcomePage() {
 
     useEffect(() => {
         $.ajax({
+            contentType: "application/json;charset=utf-8",
             url: 'http://localhost:8080/user',
             type: 'get',
             dataType: 'json',
-            data: { username: "user1" },
-            success: function (dingke) {
+            data: { username: "osama10000" },
+            success: function (data) {
 
-                console.log(dingke);
+                console.log(data);
             },
             error: function (request, status, error) {
-                console.log(request.responseText + "hi");
+                console.log(request.responseText);
             }
 
         });
