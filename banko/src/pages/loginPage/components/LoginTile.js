@@ -7,7 +7,7 @@ function LoginTile()
 {
     
     return(
-        <div className={styles.LoginTile}>
+        <div className={styles.login_tile}>
             <LoginTitle />
         </div>
     );

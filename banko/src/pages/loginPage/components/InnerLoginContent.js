@@ -7,7 +7,7 @@ function InnerLoginContent()
 {
     
     return(
-        <div className={styles.InnerLoginContent}>
+        <div className={styles.inner_login_content}>
             <LoginTile />
         </div>
     );
