@@ -10,6 +10,7 @@ import ButtonContainer from './navbarButtons/LogInRegister';
 import PageContent from '../../pages/welcomePage/components/PageContent';
 import LoginPage from '../../pages/loginPage/LoginPage';
 import RegisterPage from '../../pages/registerPage/RegisterPage';
+import DefaultPage from '../../pages/welcomePage/DefaultPage';
 
 function NavbarDefault() {
 
@@ -30,7 +31,7 @@ function NavbarDefault() {
 
 const TestHomePage = () => (
     <div>
-        <PageContent />
+        <DefaultPage />
     </div>
 )
 

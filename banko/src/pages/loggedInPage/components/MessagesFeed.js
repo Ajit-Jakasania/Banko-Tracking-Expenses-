@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import $ from 'jquery';
 
 import styles from './MessagesFeed.module.css';
-import { useEffect } from 'react';
+import { Context } from '../../../Store';
 
 function MessagesFeed() {
 
 
-
+    const [state, setState] = useContext(Context);
 
     $("#dropdown").on("submit", function () {
 
@@ -17,7 +17,9 @@ function MessagesFeed() {
             url: 'http://localhost:8080/getMessages',
             type: 'get',
             dataType: 'json',
-            data: { group_id: group_id_in },
+            //Im assuming you wanted the global id variable state.group_id
+            //data: { group_id: group_id_in },
+            data: { group_id: state.group_id },
             success: function (data) {
 
 
@@ -42,7 +44,9 @@ function MessagesFeed() {
             url: 'http://localhost:8080/getMessageGroups',
             type: 'get',
             dataType: 'json',
-            data: { user_id: context.user_id },
+            //Im assuming you wanted global variable state to get state.user_id
+            //data: { user_id: context.user_id },
+            data: { user_id: state.id },
             success: function (data) {
 
 
@@ -56,7 +60,8 @@ function MessagesFeed() {
 
                 $.each(data, function (key, value) {
 
-                    dropdown.append($('<option></option>').attr('value', entry.abbreviation).text(entry.name));
+                    //ask about this later
+                    //dropdown.append($('<option></option>').attr('value', entry.abbreviation).text(entry.name));
 
                 });
 

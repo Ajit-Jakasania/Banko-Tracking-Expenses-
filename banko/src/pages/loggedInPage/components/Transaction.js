@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 
 import $ from 'jquery';
-
 import styles from './Transaction.module.css';
-import { useEffect } from 'react';
 
 function Transaction(props) {
     return (

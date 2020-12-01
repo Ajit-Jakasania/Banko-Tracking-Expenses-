@@ -3,9 +3,21 @@ import React, { useEffect } from 'react';
 import $ from 'jquery';
 
 import styles from './Group.module.css';
-import { useEffect } from 'react';
 
+/*
+    Im going to need some clarification here. You want users from where? Users in the
+    same group? If so then we need to make an ajax call in a useEffect to get that
+    information. 
+*/
 function Group(props) {
+    return (
+        <div className={styles.Group}>
+            <p>in the groups page!</p>
+        </div>
+    )
+}
+
+/* old code
     return (
         <div className={styles.Group}>
 
@@ -17,6 +29,6 @@ function Group(props) {
 
         </div>
     )
-}
+*/
 
 export default Group;
