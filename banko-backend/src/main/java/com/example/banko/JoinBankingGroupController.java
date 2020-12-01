@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 public class JoinBankingGroupController {
     @Autowired
     JdbcTemplate jdbcTemplate;
@@ -16,7 +16,7 @@ public class JoinBankingGroupController {
 
     @PostMapping(value = "/joinGroup")
     public @ResponseBody String joinGroup(@RequestBody CreateBankingGroup createBankingGroup) {
-        int status = 0;
+
         try {
             if (createBankingGroup.userJoinGroup())
                 return "User joined group successfully";

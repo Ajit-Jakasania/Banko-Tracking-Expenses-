@@ -10,22 +10,21 @@ public class CreateBankingGroup {
     private int user_id;
     private String username;
 
-    public CreateBankingGroup(String group_name, String username) {
-        this.group_name = group_name;
-        this.username = username;
-    }
-
-    public CreateBankingGroup(int group_id, String group_name, int user_id) {
-        this.group_id = group_id;
+    public CreateBankingGroup(String group_name, int user_id) {
         this.group_name = group_name;
         this.user_id = user_id;
     }
+
+//    public CreateBankingGroup(int group_id, String group_name, int user_id) {
+//        this.group_id = group_id;
+//        this.group_name = group_name;
+//        this.user_id = user_id;
+//    }
 
     public int createBankGroup() throws SQLException {
 
         int groupCreated = 0;
         Connection connection = BankoBackendServer.connection;
-        user_id = getUserId(this.username, connection);
         if (uniqueGroup(group_name, connection)) {
             // Group is created
             if (createGroup(group_name, connection)) {
@@ -46,7 +45,7 @@ public class CreateBankingGroup {
     public boolean userJoinGroup() throws SQLException {
         Connection connection = BankoBackendServer.connection;
 
-        String query = "INSERT INTO user_in_group (user_id, group_id,date_joined) VALUES (" + this.user_id + ","
+        String query = "INSERT INTO omjmf6vzmpqpgc0p.user_in_group (user_id, group_id,date_joined) VALUES (" + this.user_id + ","
                 + this.group_id + ", now())";
 
         try {
@@ -65,11 +64,12 @@ public class CreateBankingGroup {
     private boolean createGroup(String group_name, Connection connection) {
         boolean flag = false;
 
-        String query = "INSERT INTO group_list (group_name, date_created) VALUES ('" + group_name + "', now())";
-        Statement statement;
+        String query = "INSERT INTO omjmf6vzmpqpgc0p.group_list (group_name, date_created) VALUES ('" + group_name + "', now())";
+
         try {
-            statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            statement.execute(query);
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            statement.executeUpdate(query);
             flag = true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -79,6 +79,8 @@ public class CreateBankingGroup {
     }
 
     private boolean uniqueGroup(String group_name, Connection connection) {
+
+        String group_nameInDatabase = "";
         String query = "SELECT group_name FROM omjmf6vzmpqpgc0p.group_list WHERE group_name = '" + group_name + "'";
         try {
 
@@ -86,15 +88,20 @@ public class CreateBankingGroup {
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = statement.executeQuery(query);
             if (rs.next()) {
-                return true;
+                group_nameInDatabase = rs.getString("group_name");
+                if(group_nameInDatabase.equals(group_name))
+                {
+                    // group_name is not unique
+                    return false;
+                }
             }
-            return false;
         } catch (SQLException e) {
 
             e.printStackTrace();
         }
 
-        return false;
+        //Group name is unique
+        return true;
 
     }
 
