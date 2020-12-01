@@ -44,6 +44,22 @@ public class CreateTransactionController {
             return "Bill not made";
     }
 
+    @PostMapping(value = "/getTransactions")
+    public @ResponseBody String getTransactions(@RequestBody Transaction transaction) {
+        int status = 0;
+        try {
+            transaction.getTransactions();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (status == 1)
+            return "Transaction closed";
+        else
+            return "Transaction not closed";
+    }
+
+    @PostMapping(value = "/closeTransaction")
     public @ResponseBody String closeTransaction(@RequestBody Transaction transaction) {
         int status = 0;
         try {
