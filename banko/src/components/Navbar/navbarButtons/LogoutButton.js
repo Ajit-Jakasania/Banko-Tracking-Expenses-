@@ -18,7 +18,7 @@ function LogoutButton({ text }) {
     return (
         <div className={styles2.container}>
             <div className={styles.Button}>
-                <a className={styles.active}>{text}</a>   
+                <a className={styles} onClick={handleLogout}>{text}</a>   
             </ div>
         </div>
     );
