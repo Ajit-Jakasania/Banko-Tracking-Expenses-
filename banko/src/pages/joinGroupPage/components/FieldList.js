@@ -9,7 +9,7 @@ import { Context } from '../../../Store';
 
 function FieldList()
 {
-    const { joinGroup, handleSubmit, errors } = useForm(); // initialize the hook
+    const { register, handleSubmit, errors } = useForm(); // initialize the hook
     const {state, setState} = useContext(Context);
 
 
@@ -37,7 +37,7 @@ function FieldList()
         
         <div>
             <form className={styles.FieldList} onSubmit={handleSubmit(onSubmit)}>
-                <input placeholder="Group Name" name="group_name" ref={joinGroup({ required: true })} />
+                <input placeholder="Group Name" name="group_name" ref={register({ required: true })} />
                 {errors.first_name && 'Group name is required.'}
          <input type="submit" />
 
