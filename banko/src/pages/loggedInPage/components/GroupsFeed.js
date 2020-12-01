@@ -21,7 +21,6 @@ function GroupsFeed() {
             data: { user_id: state.id },
             success: function (data) {
 
-                console.log(data);
                 var i = 0;
                 setGroups(data);
             },
@@ -44,7 +43,7 @@ function GroupsFeed() {
     //             console.log(data);
     //             var i = 0;
     //             $.each(data, function (key) {
-                    
+
     //                 groups[i] = data[key];
     //                 console.log(groups[i]);
     //                 i++;
@@ -57,13 +56,13 @@ function GroupsFeed() {
     //     });
 
     // })
-  
-    if(flag == 0){
+
+    if (flag == 0) {
         getGroups();
         setFlag(1);
     }
 
-    if (flag == 1){
+    if (flag == 1) {
         return (
             <div className={styles.GroupsFeed}>
                 <div className={styles.Groups}>
@@ -73,7 +72,7 @@ function GroupsFeed() {
                 </div>
             </div>
         )
-    }else {
+    } else {
         return (<p>No groups</p>)
     }
     // return (
@@ -83,8 +82,8 @@ function GroupsFeed() {
     //         <div className={styles.Groups}>
     //             <p>we are still in the groupsfeed</p>
     //             <p>Here is the group: {groups[0].group_name}</p>
-                
-                
+
+
     //         </div>
     //     </div>
     // )

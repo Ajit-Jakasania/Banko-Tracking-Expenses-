@@ -11,28 +11,31 @@ import styles from './Group.module.css';
 function Group(props) {
 
     //const [users, setUsers] = useState();
-    const users = new Array();
+    const [users, setUsers] = useState(new Array());
+    const [flag, setFlag] = useState(0);
 
     function getUsers() {
-            $.ajax({
+        $.ajax({
             contentType: "application/json;charset=utf-8",
             url: 'http://localhost:8080/allGroupUser',
             type: 'get',
             dataType: 'json',
             data: { group_id: props.group_id },
             success: function (data) {
-
+                let temp = users;
                 var i = 0;
-                console.log(data);
-                
 
                 $.each(data, function (key) {
+                    temp[i] = data[i].username;
 
-                    users[i] = data[key];
-                    console.log(users[i]);
                     i++;
-
                 });
+
+
+                setUsers(temp);
+
+
+
 
             },
             error: function (request, status, error) {
@@ -52,7 +55,7 @@ function Group(props) {
 
     //             var i = 0;
     //             console.log(data);
-                
+
 
     //             $.each(data, function (key) {
 
@@ -70,17 +73,28 @@ function Group(props) {
     //     });
     // })
 
-    return (
-        <div className={styles.Group}>
+    if (flag == 0) {
+        getUsers();
+        setFlag(1);
+    }
 
-            <h2>{props.group_name}</h2>
+    if (flag == 1) {
+        return (
+            <div className={styles.Group}>
 
-            {users.map(user => (
-                <p>User: {user}</p>
-            ))}
+                <h2>{props.group_name}</h2>
 
-        </div>
-    )
+                <div>
+                    {users.map(user => (
+                        <p>User: {user}</p>
+                    ))}
+                </div>
+
+            </div>
+        )
+    } else {
+        return (<p>Not yet</p>)
+    }
 }
 
 /* old code
