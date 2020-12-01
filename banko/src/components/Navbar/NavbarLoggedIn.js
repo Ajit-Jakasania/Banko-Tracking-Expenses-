@@ -22,11 +22,13 @@ function NavbarLoggedIn() {
                 <Button text="Home" link="/logIn" />
                 <Logo />
                 <ButtonContainer text="Join Group" link="/joinGroup" />
+                <ButtonContainer text="Create Group" link="/createGroup" />
                 <LogoutButton text="Log out" /> 
             </ div>
             <Route exact path="/logIn" component={TestHomePage} /> 
             <Route path="/logOut" component={TestLogoutPage} />
             <Route path='/joinGroup' component={JoinGroupPage} />
+            <Route path='/createGroup' component={GroupRegisterPage} />
         </Router>
     );
 }
