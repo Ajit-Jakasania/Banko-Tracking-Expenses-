@@ -10,9 +10,11 @@ import styles from './Group.module.css';
 */
 function Group(props) {
 
-    const [users, setUsers] = useState();
+    //const [users, setUsers] = useState();
+    const [users, setUsers] = useState(new Array());
+    const [flag, setFlag] = useState(0);
 
-    useEffect(() => {
+    function getUsers() {
         $.ajax({
             contentType: "application/json;charset=utf-8",
             url: 'http://localhost:8080/allGroupUser',
@@ -20,12 +22,20 @@ function Group(props) {
             dataType: 'json',
             data: { group_id: props.group_id },
             success: function (data) {
-
+                let temp = users;
                 var i = 0;
-                console.log(data);
 
-                setUsers(data);
-               
+                $.each(data, function (key) {
+                    temp[i] = data[i].username;
+
+                    i++;
+                });
+
+
+                setUsers(temp);
+
+
+
 
             },
             error: function (request, status, error) {
@@ -33,21 +43,58 @@ function Group(props) {
             }
 
         });
-    })
+    }
+    // useEffect(() => {
+    //     $.ajax({
+    //         contentType: "application/json;charset=utf-8",
+    //         url: 'http://localhost:8080/allGroupUser',
+    //         type: 'get',
+    //         dataType: 'json',
+    //         data: { group_id: props.group_id },
+    //         success: function (data) {
 
-    return (
-        <p>we returned: {props.group_id}</p>
-        // <div className={styles.Group}>
+    //             var i = 0;
+    //             console.log(data);
 
-        //     <h2>{props.group_name}</h2>
-        //     <p>Entered the group</p>
 
-        //     {users.map(user => (
-        //         <p>User: {user}</p>
-        //     ))}
+    //             $.each(data, function (key) {
 
-        // </div>
-    )
+    //                 users[i] = data[key];
+    //                 console.log(users[i]);
+    //                 i++;
+
+    //             });
+
+    //         },
+    //         error: function (request, status, error) {
+    //             console.log(request.responseText);
+    //         }
+
+    //     });
+    // })
+
+    if (flag == 0) {
+        getUsers();
+        setFlag(1);
+    }
+
+    if (flag == 1) {
+        return (
+            <div className={styles.Group}>
+
+                <h2>{props.group_name}</h2>
+
+                <div>
+                    {users.map(user => (
+                        <p>User: {user}</p>
+                    ))}
+                </div>
+
+            </div>
+        )
+    } else {
+        return (<p>Not yet</p>)
+    }
 }
 
 /* old code

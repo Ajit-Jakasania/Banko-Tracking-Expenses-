@@ -9,10 +9,29 @@ import { Context } from '../../../Store';
 function GroupsFeed() {
 
     const [groups, setGroups] = useState(new Array());
-    const [test, setTest] = useState(0);
+    const [flag, setFlag] = useState(0);
     const [state, setState] = useContext(Context);
 
-    // function getGroups() {
+    function getGroups() {
+        $.ajax({
+            contentType: "application/json;charset=utf-8",
+            url: 'http://localhost:8080/userGroups',
+            type: 'get',
+            dataType: 'json',
+            data: { user_id: state.id },
+            success: function (data) {
+
+                var i = 0;
+                setGroups(data);
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+        });
+    }
+
+    //write java for this
+    // useEffect(() => {
     //     $.ajax({
     //         contentType: "application/json;charset=utf-8",
     //         url: 'http://localhost:8080/userGroups',
@@ -23,48 +42,39 @@ function GroupsFeed() {
 
     //             console.log(data);
     //             var i = 0;
-    //             setGroups(data);
+    //             $.each(data, function (key) {
+
+    //                 groups[i] = data[key];
+    //                 console.log(groups[i]);
+    //                 i++;
+    //             });
+    //             printGroups();
     //         },
     //         error: function (request, status, error) {
     //             console.log(request.responseText);
     //         }
     //     });
-    // }
 
-    useEffect(() => {
-        $.ajax({
-            contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/userGroups',
-            type: 'get',
-            dataType: 'json',
-            data: { user_id: state.id },
-            success: function (data) {
+    // })
 
-                console.log(data);
-                var i = 0;
-                setGroups(data);
+    if (flag == 0) {
+        getGroups();
+        setFlag(1);
+    }
 
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            }
-        });
-
-    })
-
-
-
-    return (
-        <div className={styles.GroupsFeed}>
-            <JoinCreateGroup />
-            <div className={styles.Groups}>
-                {groups.map(group => (
-                    <Group group_id={group.group_id} group_name={group.group_name} />
-                ))}
+    if (flag == 1) {
+        return (
+            <div className={styles.GroupsFeed}>
+                <div className={styles.Groups}>
+                    {groups.map(group => (
+                        <Group group_id={group.group_id} group_name={group.group_name} />
+                    ))}
+                </div>
             </div>
-        </div>
-    )
-
+        )
+    } else {
+        return (<p>No groups</p>)
+    }
     // return (
     //     <div className={styles.GroupsFeed}>
     //         <JoinCreateGroup />
