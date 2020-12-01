@@ -35,8 +35,4 @@ const TestHomePage = () => (
 )
 
 
-<<<<<<< HEAD:banko/src/components/Navbar/Navbar.js
-export default Navbar;
-=======
 export default NavbarDefault;
->>>>>>> 3514149a93d2f856996beb473dd1e466e1d8b3f2:banko/src/components/Navbar/NavbarDefault.js
