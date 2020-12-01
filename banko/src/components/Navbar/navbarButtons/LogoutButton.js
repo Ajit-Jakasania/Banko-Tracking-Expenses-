@@ -1,6 +1,4 @@
 import React, { useContext } from 'react';
-import { Link, Route } from 'react-router-dom';
-import WelcomePage from '../../../pages/welcomePage/WelcomePage';
 import { Context } from '../../../Store';
 
 
@@ -24,10 +22,6 @@ function LogoutButton({ text }) {
     );
 }
 
-/*
-<form onClick={handleLogout()}>
-                    <a className={styles.active} type="submit">{text}</a>
-                </form> 
-                */
+
 
 export default LogoutButton;

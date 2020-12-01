@@ -9,7 +9,6 @@ import LogoutButton from './navbarButtons/LogoutButton';
 import LoggedInPage from '../../pages/loggedInPage/LoggedInPage';
 import GroupRegisterPage from '../../pages/groupRegisterPage/GroupRegisterPage';
 import JoinGroupPage from '../../pages/joinGroupPage/JoinGroupPage'
-import PageContent from '../../pages/welcomePage/components/PageContent';
 
 function NavbarLoggedIn() {
 
@@ -28,7 +27,6 @@ function NavbarLoggedIn() {
                 <LogoutButton text="Log out" /> 
             </ div>
             <Route exact path="/logIn" component={TestHomePage} /> 
-            <Route path="/logOut" component={TestLogoutPage} />
             <Route path='/joinGroup' component={JoinGroupPage} />
             <Route path='/createGroup' component={GroupRegisterPage} />
         </Router>
@@ -43,10 +41,5 @@ const TestHomePage = () => (
     </div>
 )
 
-const TestLogoutPage = () => (
-    <div>
-        <p>Logout test page</p>
-    </div>
-)
 
 export default NavbarLoggedIn;
