@@ -35,9 +35,7 @@ function WelcomePage({ props }) {
 
     return (
         <div>
-            <NavbarDefault />
             <PageContent />
-            <Footer />
         </div>
     );
 }
