@@ -6,6 +6,7 @@ import Button from './navbarButtons/Button'
 import Logo from '../Logo/Logo'
 import ButtonContainer from './navbarButtons/LogInRegister';
 import LogoutButton from './navbarButtons/LogoutButton';
+import LoggedInPage from '../../pages/loggedInPage/LoggedInPage';
 import GroupRegisterPage from '../../pages/groupRegisterPage/GroupRegisterPage';
 import JoinGroupPage from '../../pages/joinGroupPage/JoinGroupPage'
 import PageContent from '../../pages/welcomePage/components/PageContent';
@@ -21,6 +22,7 @@ function NavbarLoggedIn() {
             <div className={styles.Navbar}>
                 <Button text="Home" link="/logIn" />
                 <Logo />
+
                 <ButtonContainer text="Join Group" link="/joinGroup" />
                 <ButtonContainer text="Create Group" link="/createGroup" />
                 <LogoutButton text="Log out" /> 
@@ -35,14 +37,15 @@ function NavbarLoggedIn() {
 
 const TestHomePage = () => (
     <div>
-            <PageContent />
-            <p>we are still logged in!</p>
+
+        <LoggedInPage />
+
     </div>
 )
 
 const TestLogoutPage = () => (
     <div>
-            <p>Logout test page</p>
+        <p>Logout test page</p>
     </div>
 )
 

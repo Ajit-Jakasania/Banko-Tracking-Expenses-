@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import styles from './FieldList.module.css'
 import InputField from './InputField'
 import InputButton from './InputButton'
-import {Context} from '../../../Store'; //remove possibly
+import { Context } from '../../../Store'; //remove possibly
 
 
 function FieldList() {
@@ -26,8 +26,8 @@ function FieldList() {
                 else {
                     console.log("your id is " + retValue);
                     sessionStorage.setItem("id", retValue);
-                  
-                    setState({id: retValue});  //remove later possibly
+
+                    setState({ id: retValue });  //remove later possibly
 
                 }
 
