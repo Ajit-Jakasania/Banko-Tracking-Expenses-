@@ -18,25 +18,21 @@ function NavbarDefault() {
             <div className={styles.Navbar}>
                 <Button text="Home" link="/" />
                 <Logo />
-                <ButtonContainer text="Log In" link='/logIn' /> 
+                <ButtonContainer text="Log In" link='/logIn' />
                 <ButtonContainer text="Register" link='/Register' />
             </ div>
-            <Route exact path="/" component={TestHomePage} /> 
-            <Route path="/logIn" component={LoginPage} /> 
-            <Route path="/Register" component={RegisterPage} /> 
+            <Route exact path="/" component={TestHomePage} />
+            <Route path="/logIn" component={LoginPage} />
+            <Route path="/Register" component={RegisterPage} />
         </Router>
     );
 }
 
 const TestHomePage = () => (
     <div>
-            <PageContent />
+        <PageContent />
     </div>
 )
 
 
-<<<<<<< HEAD:banko/src/components/Navbar/Navbar.js
-export default Navbar;
-=======
 export default NavbarDefault;
->>>>>>> 3514149a93d2f856996beb473dd1e466e1d8b3f2:banko/src/components/Navbar/NavbarDefault.js

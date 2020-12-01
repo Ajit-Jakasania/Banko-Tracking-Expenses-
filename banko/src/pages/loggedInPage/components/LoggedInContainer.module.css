@@ -1,0 +1,9 @@
+.LoggedInContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.Sidebar {
+    display: flex;
+    flex-direction: column;
+}
