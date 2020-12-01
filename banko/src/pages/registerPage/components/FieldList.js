@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
+=======
+  
+import React, { useEffect, useState } from 'react'
+
+>>>>>>> 3514149a93d2f856996beb473dd1e466e1d8b3f2
 import { useForm } from 'react-hook-form';
 import $ from 'jquery'
 
@@ -7,8 +13,18 @@ import styles from './FieldList.module.css'
 function FieldList() {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
 
+<<<<<<< HEAD
     //const [returnValue, setReturnValue] = useState("hihihi");
+=======
+>>>>>>> 3514149a93d2f856996beb473dd1e466e1d8b3f2
     const onSubmit = (jsonData) => {
+
+        //removes empty values AKA optionals
+        $.each(jsonData, function (key, value) {
+            if (value === "" || value === null) {
+                delete jsonData[key];
+            }
+        });
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
@@ -20,6 +36,10 @@ function FieldList() {
 
                 console.log(retValue);
                 //setReturnValue(retValue);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3514149a93d2f856996beb473dd1e466e1d8b3f2
             },
             error: function (request, status, error) {
                 console.log(request.responseText);
@@ -80,6 +100,10 @@ function FieldList() {
 
 
                 </ul>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3514149a93d2f856996beb473dd1e466e1d8b3f2
 
             </form>
 

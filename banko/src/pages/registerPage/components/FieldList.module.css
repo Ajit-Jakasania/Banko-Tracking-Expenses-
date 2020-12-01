@@ -1,10 +1,13 @@
 
+<<<<<<< HEAD
 
 .FieldList {
     display:flex;
     flex-direction: column;
 }
 
+=======
+>>>>>>> 3514149a93d2f856996beb473dd1e466e1d8b3f2
 ul.list{
     list-style-type: none;
     text-align: center;
@@ -24,3 +27,7 @@ ul.list li input{
     flex-direction: column;
 }
 */
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3514149a93d2f856996beb473dd1e466e1d8b3f2

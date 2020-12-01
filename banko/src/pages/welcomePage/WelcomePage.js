@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import Navbar from '../../components/Navbar/Navbar'
+import NavbarDefault from '../../components/Navbar/NavbarDefault'
 import PageContent from './components/PageContent';
 import Footer from '../../components/Footer/Footer'
 import $ from "jquery"
@@ -11,15 +11,37 @@ import RegisterPage from './../registerPage/RegisterPage'
 
 
 
-function WelcomePage() {
+function WelcomePage({ props }) {
 
+<<<<<<< HEAD
     //const [count, setCount] = useState(0);
     //const [userID, setUserID] = useState(0);
     //const [firstname, setFirstname] = useState(0);
+=======
+    // useEffect(() => {
+    //     $.ajax({
+    //         contentType: "application/json;charset=utf-8",
+    //         url: 'http://localhost:8080/userGroups',
+    //         type: 'get',
+    //         dataType: 'json',
+    //         data: { username: "user1" },
+    //         success: function (data) {
+
+    //             console.log(data);
+    //         },
+    //         error: function (request, status, error) {
+    //             console.log(request.responseText);
+    //         }
+
+    //     });
+    // })
+
+
+>>>>>>> 3514149a93d2f856996beb473dd1e466e1d8b3f2
 
     return (
         <div>
-            <Navbar />
+            <NavbarDefault />
             <PageContent />
             <Footer />
         </div>
