@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
 import $ from 'jquery'
 import { useForm } from 'react-hook-form';
 
 import styles from './FieldList.module.css'
 import InputField from './InputField'
 import InputButton from './InputButton'
+import {Context} from '../../../Store'; //remove possibly
+
 
 function FieldList() {
 
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
+    const [state, setState] = useContext(Context); // global user variable
 
     const onSubmit = (jsonData) => {
-
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
@@ -24,6 +27,9 @@ function FieldList() {
                 else {
                     console.log("your id is " + retValue);
                     sessionStorage.setItem("id", retValue);
+                  
+                    setState({id: retValue});  //remove later possibly
+
                 }
 
 
@@ -40,15 +46,17 @@ function FieldList() {
         <div>
             <form className={styles.FieldList} onSubmit={handleSubmit(onSubmit)}>
 
+                <ul className={styles}>
+                    <li>User Login</li>
+                    <li><input placeholder="Username" name="username" ref={register({ required: true })} /></li>
+                    {errors.username && 'username is required.'}
 
-                <input placeholder="Username" name="username" ref={register({ required: true })} />
-                {errors.username && 'username is required.'}
-
-                <input placeholder="Password" name="hashed_password" ref={register({ required: true })} />
-                {errors.hashed_password && 'Password is required.'}
+                    <li><input type="password" placeholder="Password" name="hashed_password" ref={register({ required: true })} /></li>
+                    {errors.hashed_password && 'Password is required.'}
 
 
-                <input type="submit" />
+                    <li><input type="submit" /></li>
+                </ul>
 
             </form>
 
