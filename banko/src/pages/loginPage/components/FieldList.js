@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+
 import $ from 'jquery'
 import { useForm } from 'react-hook-form';
 
@@ -26,7 +27,9 @@ function FieldList() {
                 else {
                     console.log("your id is " + retValue);
                     sessionStorage.setItem("id", retValue);
+                  
                     setState({id: retValue});  //remove later possibly
+
                 }
 
 

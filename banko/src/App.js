@@ -18,6 +18,7 @@ function App() {
       </div>
     </Store>
   )
+
 }
 
 export default App;

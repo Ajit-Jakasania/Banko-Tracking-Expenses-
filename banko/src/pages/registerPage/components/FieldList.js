@@ -1,5 +1,6 @@
   
 import React, { useEffect, useState } from 'react'
+
 import { useForm } from 'react-hook-form';
 import $ from 'jquery'
 
@@ -8,8 +9,14 @@ import styles from './FieldList.module.css'
 function FieldList() {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
 
-    //const [returnValue, setReturnValue] = useState("hihihi");
     const onSubmit = (jsonData) => {
+
+        //removes empty values AKA optionals
+        $.each(jsonData, function (key, value) {
+            if (value === "" || value === null) {
+                delete jsonData[key];
+            }
+        });
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
@@ -21,6 +28,7 @@ function FieldList() {
 
                 console.log(retValue);
                 //setReturnValue(retValue);
+
             },
             error: function (request, status, error) {
                 console.log(request.responseText);
@@ -82,6 +90,7 @@ function FieldList() {
 
 
                 </ul>
+
 
             </form>
 

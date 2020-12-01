@@ -11,11 +11,27 @@ import RegisterPage from './../registerPage/RegisterPage'
 
 
 
-function WelcomePage() {
+function WelcomePage({ props }) {
 
-    //const [count, setCount] = useState(0);
-    //const [userID, setUserID] = useState(0);
-    //const [firstname, setFirstname] = useState(0);
+    // useEffect(() => {
+    //     $.ajax({
+    //         contentType: "application/json;charset=utf-8",
+    //         url: 'http://localhost:8080/userGroups',
+    //         type: 'get',
+    //         dataType: 'json',
+    //         data: { username: "user1" },
+    //         success: function (data) {
+
+    //             console.log(data);
+    //         },
+    //         error: function (request, status, error) {
+    //             console.log(request.responseText);
+    //         }
+
+    //     });
+    // })
+
+
 
     return (
         <div>
