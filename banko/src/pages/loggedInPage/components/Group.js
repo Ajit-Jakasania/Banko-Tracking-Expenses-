@@ -25,8 +25,7 @@ function Group(props) {
                 console.log(data);
 
                 setUsers(data);
-               
-
+            
             },
             error: function (request, status, error) {
                 console.log(request.responseText);
