@@ -43,7 +43,7 @@ function GroupsFeed() {
 
             <div className={styles.Groups}>
                 {groups.map(group => (
-                    <Group name={group[0].group_name} user={group[1]} />
+                    <Group group_id={group[0].group_id} group_name={group[0].group_name} />
                 ))}
             </div>
         </div>
