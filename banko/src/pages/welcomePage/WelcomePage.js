@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import Navbar from '../../components/Navbar/Navbar'
+import NavbarDefault from '../../components/Navbar/NavbarDefault'
 import PageContent from './components/PageContent';
 import Footer from '../../components/Footer/Footer'
 import $ from "jquery"
@@ -19,7 +19,7 @@ function WelcomePage() {
 
     return (
         <div>
-            <Navbar />
+            <NavbarDefault />
             <PageContent />
             <Footer />
         </div>

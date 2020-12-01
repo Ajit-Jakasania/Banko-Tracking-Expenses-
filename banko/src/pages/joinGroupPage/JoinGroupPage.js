@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar/Navbar'
 import JoinGroupContainer from './components/LoginContainer';
 import Footer from '../../components/Footer/Footer'
 
+
 function GroupRegisterPage()
 {
     return (
