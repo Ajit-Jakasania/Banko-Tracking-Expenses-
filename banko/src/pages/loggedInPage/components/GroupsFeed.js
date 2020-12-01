@@ -18,7 +18,7 @@ function GroupsFeed() {
             url: 'http://localhost:8080/getGroups',
             type: 'get',
             dataType: 'json',
-            data: { user_id: state.user_id },
+            data: { user_id: state.id },
             success: function (data) {
 
                 var i = 0;
@@ -43,7 +43,7 @@ function GroupsFeed() {
 
             <div className={styles.Groups}>
                 {groups.map(group => (
-                    <Group name={group[0]} user={group[1]} />
+                    <Group group_id={group[0].group_id} group_name={group[0].group_name} />
                 ))}
             </div>
         </div>
