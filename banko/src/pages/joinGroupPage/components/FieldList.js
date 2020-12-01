@@ -10,8 +10,7 @@ import { Context } from '../../../Store';
 function FieldList()
 {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
-    const {state, setState} = useContext(Context);
-
+    const [state, setState] = useContext(Context);
 
     const onSubmit = (jsonData) => {
 
@@ -20,9 +19,8 @@ function FieldList()
             url: 'http://localhost:8080/joinGroup',
             type: 'POST',
             dataType: 'json',
-            data: "{\" " + jsonData.key + "\" : \"" + jsonData.value + "\" , \"user_id\" : \"" + state.id + "\" }",
+            data: "{\"group_name\" : \"" + jsonData.group_name + "\" , \"user_id\" : \"" + state.id + "\" }",
             success: function (retValue) {
-
                 console.log(retValue);
             },
             error: function (request, status, error) {
