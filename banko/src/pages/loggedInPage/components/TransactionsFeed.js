@@ -23,6 +23,7 @@ function TransactionsFeed() {
             success: function (data) {
 
                 var i = 0;
+                console.log(data);
 
                 $.each(data, function (key) {
 
