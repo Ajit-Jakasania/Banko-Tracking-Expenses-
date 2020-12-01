@@ -4,7 +4,6 @@ import {BrowserRouter as Router, Route, Link } from "react-router-dom";
 import styles from './LoggedInContainer.module.css';
 import GroupsFeed from './GroupsFeed';
 import WelcomePage from '../../welcomePage/WelcomePage';
-import Group from './Group';
 import MessagesFeed from './MessagesFeed';
 import TransactionsFeed from './TransactionsFeed';
 
@@ -30,7 +29,7 @@ function LoggedInContainer() {
                 </div>
 
                 <Route exact path='/' component={WelcomePage} />
-                <Route path='/groups' component={Group} />
+                <Route path='/groups' component={GroupsFeed} />
                 <Route path='/messages' component={MessagesFeed} />
                 <Route path='/transactions' component={TransactionsFeed} />
 

@@ -46,7 +46,7 @@ function FieldList() {
             <form className={styles.FieldList} onSubmit={handleSubmit(onSubmit)}>
                 <ul className={styles}>
 
-                    <li>See it works OSAMA!!</li>
+                    <li>Register</li>
                     <li><input placeholder="First Name" name="first_name" ref={register({ required: true })} /></li>
                     {errors.first_name && 'First name is required.'}
 
