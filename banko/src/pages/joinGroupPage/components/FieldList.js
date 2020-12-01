@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import $ from 'jquery'
 import styles from './FieldList.module.css'
 import InputField from './InputField'
 import InputButton from './InputButton'
+import { Context } from '../../../Store';
+
 
 function FieldList()
 {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
+    const {state, setState} = useContext(Context);
+
 
     const onSubmit = (jsonData) => {
 
@@ -16,7 +20,7 @@ function FieldList()
             url: 'http://localhost:8080/joinGroup',
             type: 'POST',
             dataType: 'json',
-            data: JSON.stringify(jsonData),
+            data: "{\" " + jsonData.key + "\" : \"" + jsonData.value + "\" , \"user_id\" : \"" + state.id + "\" }",
             success: function (retValue) {
 
                 console.log(retValue);
@@ -28,7 +32,7 @@ function FieldList()
         });
 
     };
-
+    
     return(
         
         <div>
