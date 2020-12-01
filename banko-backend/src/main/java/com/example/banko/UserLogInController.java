@@ -20,7 +20,7 @@ public class UserLogInController {
         int id = -1;
 
         try {
-            id = userLogIn.gitloginUser();
+            id = userLogIn.loginUser();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
