@@ -28,7 +28,7 @@ public class CreateBankingGroup {
         if (uniqueGroup(group_name, connection)) {
             // Group is created
             if (createGroup(group_name, connection)) {
-                group_id = getGroupId(group_name, connection);
+
                 if (userJoinGroup()) {
                     // User join the group created
                     groupCreated = 1;
@@ -44,7 +44,7 @@ public class CreateBankingGroup {
 
     public boolean userJoinGroup() throws SQLException {
         Connection connection = BankoBackendServer.connection;
-
+        group_id = getGroupId(group_name, connection);
         String query = "INSERT INTO omjmf6vzmpqpgc0p.user_in_group (user_id, group_id,date_joined) VALUES (" + this.user_id + ","
                 + this.group_id + ", now())";
 
