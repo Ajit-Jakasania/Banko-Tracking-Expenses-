@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form';
 import $ from 'jquery'
 import styles from './FieldList.module.css'
@@ -35,11 +35,13 @@ function FieldList()
         
         <div>
             <form className={styles.FieldList} onSubmit={handleSubmit(onSubmit)}>
-                <input placeholder="Group Name" name="group_name" ref={register({ required: true })} />
-                {errors.first_name && 'Group name is required.'}
-                
-                <input type="submit" />
-
+                <ul className={styles}>
+                    <li>Create A New Group</li>
+                    <li><input placeholder="Group Name" name="group_name" ref={register({ required: true })} /></li>
+                    {errors.first_name && 'Group name is required.'}
+                    
+                    <input type="submit" />
+                </ul>
          </form>
 
      </div>
