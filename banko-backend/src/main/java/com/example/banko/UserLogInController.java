@@ -18,7 +18,6 @@ public class UserLogInController {
     @PostMapping(value = "/userLogIn")
     public @ResponseBody int userLogin(@RequestBody UserLogIn userLogIn) {
         int id = -1;
-
         try {
             id = userLogIn.loginUser();
         } catch (SQLException throwables) {

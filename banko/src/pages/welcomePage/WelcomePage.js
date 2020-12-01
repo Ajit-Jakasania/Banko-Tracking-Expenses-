@@ -13,11 +13,6 @@ import RegisterPage from './../registerPage/RegisterPage'
 
 function WelcomePage({ props }) {
 
-<<<<<<< HEAD
-    //const [count, setCount] = useState(0);
-    //const [userID, setUserID] = useState(0);
-    //const [firstname, setFirstname] = useState(0);
-=======
     // useEffect(() => {
     //     $.ajax({
     //         contentType: "application/json;charset=utf-8",
@@ -37,7 +32,6 @@ function WelcomePage({ props }) {
     // })
 
 
->>>>>>> 3514149a93d2f856996beb473dd1e466e1d8b3f2
 
     return (
         <div>
