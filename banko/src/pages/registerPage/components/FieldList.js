@@ -5,11 +5,19 @@ import $ from 'jquery'
 import styles from './FieldList.module.css'
 import InputField from './InputField'
 import InputButton from './InputButton'
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 function FieldList() {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
 
     const onSubmit = (jsonData) => {
+
+        //removes empty values AKA optionals
+        $.each(jsonData, function (key, value) {
+            if (value === "" || value === null) {
+                delete jsonData[key];
+            }
+        });
 
         $.ajax({
             contentType: "application/json;charset=utf-8",

@@ -12,49 +12,49 @@ public class UserLogIn {
         this.hashed_password = hashed_password;
     }
 
-    public boolean loginUser() throws SQLException {
+    public int loginUser() throws SQLException {
 
-        if (checkIfPasswordsMatch(username, hashed_password)) {
-            // logged in
-            return true;
-        } else {
-            // throw error
-        }
-        return false;
+        String out[] = getStoredPassword(username);
+
+        if (out[0] == null)
+            return -1;
+
+        String pw = out[0];
+        int id = Integer.parseInt(out[1]);
+
+        if (pw.equals(User.hashString(hashed_password)))
+            return id;
+
+        return -1;
     }
 
-    private String getStoredPassword(String username) {
+    private String[] getStoredPassword(String username) {
+
         Connection connection = BankoBackendServer.connection;
 
-        String pw = null;
-        String query = "SELECT hashed_password FROM omjmf6vzmpqpgc0p.user WHERE username = '" + username + "'";
+        String out[] = new String[2];
+        out[0] = null;
+
+        String query = "SELECT user_id, hashed_password FROM omjmf6vzmpqpgc0p.user WHERE username = '" + username + "'";
 
         try {
 
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
+
             ResultSet rs = statement.executeQuery(query);
 
-            rs.next();
+            if (rs.next()) {
 
-            pw = rs.getString("hashed_password");
+                out[0] = rs.getString("hashed_password");
+                out[1] = Integer.toString(rs.getInt("user_id"));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return pw;
-    }
-
-    private boolean checkIfPasswordsMatch(String username, String password) {
-
-        // hashed_pass = hash(password);
-        String pw = getStoredPassword(username);
-
-        if (pw.equals(User.hashString(password)))
-            return true;
-
-        return false;
+        return out;
     }
 
     public String getUsername() {
