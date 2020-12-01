@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CreateBankingGroupController {
 
     @Autowired
@@ -26,9 +26,9 @@ public class CreateBankingGroupController {
         }
         if (status == 1)
             return "Group Created Successfully!";
-        else if (status == 2)
+        else if (status == -1)
             return "Failed as group name is not unique!";
 
-        return "";
+        return "Check createBankController post method (backend)";
     }
 }

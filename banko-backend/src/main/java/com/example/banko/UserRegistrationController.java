@@ -77,7 +77,7 @@ public class UserRegistrationController {
             return "Failed as username is not unique!";
         else if (status == 3)
             return "User Successfully Registered!";
-        return "shit";
+        return "Check the userRegister post method (backend)";
     }
 
 }

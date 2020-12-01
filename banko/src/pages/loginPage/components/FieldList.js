@@ -45,9 +45,13 @@ function FieldList() {
     return (
         <div>
             <form className={styles.FieldList} onSubmit={handleSubmit(onSubmit)}>
-
                 <ul className={styles}>
+<<<<<<< HEAD
+                    <li>Login</li>
+
+=======
                     <li>User Login</li>
+>>>>>>> 3514149a93d2f856996beb473dd1e466e1d8b3f2
                     <li><input placeholder="Username" name="username" ref={register({ required: true })} /></li>
                     {errors.username && 'username is required.'}
 
