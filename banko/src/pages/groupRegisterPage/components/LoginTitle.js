@@ -7,7 +7,7 @@ function LoginTitle()
 {
     
     return(
-        <div class={styles.login_title}>
+        <div className={styles.login_title}>
             <FieldList />
         </div>
     );

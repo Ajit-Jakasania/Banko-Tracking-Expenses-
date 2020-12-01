@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form';
 import $ from 'jquery'
 import styles from './FieldList.module.css'
 import InputField from './InputField'
 import InputButton from './InputButton'
+import { Context } from '../../../Store';
 
 function FieldList()
 {
-    const { createGroup, handleSubmit, errors } = useForm(); // initialize the hook
+    const { register, handleSubmit, errors } = useForm(); // initialize the hook
+    const [state, setState] = useContext(Context);
 
     const onSubmit = (jsonData) => {
 
@@ -16,7 +18,7 @@ function FieldList()
             url: 'http://localhost:8080/createBankGroup',
             type: 'POST',
             dataType: 'json',
-            data: JSON.stringify(jsonData),
+            data: "{\"group_name\" : \"" + jsonData.group_name + "\" , \"user_id\" : \"" + state.id + "\" }",
             success: function (retValue) {
 
                 console.log(retValue);
@@ -33,11 +35,13 @@ function FieldList()
         
         <div>
             <form className={styles.FieldList} onSubmit={handleSubmit(onSubmit)}>
-                <input placeholder="Group Name" name="group_name" ref={createGroup({ required: true })} />
-                {errors.first_name && 'Group name is required.'}
-                
-                <input type="submit" />
-
+                <ul className={styles}>
+                    <li>Create A New Group</li>
+                    <li><input placeholder="Group Name" name="group_name" ref={register({ required: true })} /></li>
+                    {errors.first_name && 'Group name is required.'}
+                    
+                    <input type="submit" />
+                </ul>
          </form>
 
      </div>

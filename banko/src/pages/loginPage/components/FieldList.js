@@ -12,8 +12,7 @@ import { Context } from '../../../Store'; //remove possibly
 function FieldList() {
 
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
-    const [state, setState] = useContext(Context); // global user variable
-
+    const [state, setState] = useContext(Context);    
     const onSubmit = (jsonData) => {
 
         $.ajax({
