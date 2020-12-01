@@ -24,7 +24,7 @@ function GroupsFeed() {
                 console.log(data);
                 var i = 0;
                 $.each(data, function (key) {
-                    
+
                     groups[i] = data[key];
                     console.log(groups[i]);
                     i++;
