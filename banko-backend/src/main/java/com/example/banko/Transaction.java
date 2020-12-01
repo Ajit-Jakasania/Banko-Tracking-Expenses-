@@ -1,6 +1,8 @@
 package com.example.banko;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Transaction {
 
@@ -45,6 +47,57 @@ public class Transaction {
         }
         return -1;
     }
+
+    public static ArrayList<HashMap<String,String>> getUserTransactions(int user_id)
+    {
+        Connection connection = BankoBackendServer.connection;
+        ArrayList<HashMap<String,String>> listAllGroupTransactions = new ArrayList<HashMap<String,String>>();
+        ArrayList<HashMap<String,String>> listTransactions = new ArrayList<HashMap<String,String>>();
+
+        String selectSql = "SELECT group_id FROM omjmf6vzmpqpgc0p.user_in_group WHERE user_id =" + user_id ;
+        try {
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet rs = statement.executeQuery(selectSql);
+            while (rs.next()) {
+                HashMap<String, String> userTransactionJSON = new HashMap<String, String>();
+                userTransactionJSON.put("group_id",Integer.toString(rs.getInt("group_id")));
+                listTransactions.add(userTransactionJSON);
+
+            }
+            } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            }
+            for(HashMap<String, String> map: listTransactions){
+                for(String s: map.keySet()){
+                    String group_id = map.get(s);
+                    int tempGroup_id = Integer.parseInt(group_id);
+                    String query = "SELECT * FROM omjmf6vzmpqpgc0p.transaction WHERE group_id =" + tempGroup_id ;
+                    try {
+                        Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                                ResultSet.CONCUR_UPDATABLE);
+
+                        ResultSet rs = statement.executeQuery(query);
+                        while (rs.next()) {
+                            HashMap<String, String> userAllTransactionJSON = new HashMap<String, String>();
+                            userAllTransactionJSON.put("transaction_id",Integer.toString(rs.getInt("transaction_id")));
+                            userAllTransactionJSON.put("group_id",Integer.toString(rs.getInt("group_id")));
+                            userAllTransactionJSON.put("date_created", (rs.getString("date_created")));
+                            userAllTransactionJSON.put("date_closed", (rs.getString("date_closed")));
+                            userAllTransactionJSON.put("transaction_content", (rs.getString("transaction_content")));
+                            userAllTransactionJSON.put("amount",Double.toString(rs.getDouble("amount")));
+                            listAllGroupTransactions.add(userAllTransactionJSON);
+                        }
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            }
+
+        return listAllGroupTransactions;
+    }
+
 
     /**
      * Updates the close date to now. Will be a button on the front end that will

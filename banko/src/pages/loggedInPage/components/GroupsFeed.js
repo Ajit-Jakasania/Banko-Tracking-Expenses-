@@ -1,11 +1,13 @@
-import React from 'react';
-
+import React, { useContext, useEffect } from 'react';
+import $ from 'jquery'
 import styles from './GroupsFeed.module.css';
 import JoinCreateGroup from './JoinCreateGroup';
 import Group from './Group';
+import { Context } from '../../../Store';
 
 function GroupsFeed() {
 
+    const [state, setState] = useContext(Context);
     const groups = new Array();
 
     //write java for this
@@ -15,9 +17,10 @@ function GroupsFeed() {
             url: 'http://localhost:8080/getGroups',
             type: 'get',
             dataType: 'json',
-            data: { user_id: context.user_id },
+            data: { user_id: state.id },
             success: function (data) {
-
+                
+                console.log(data);
                 var i = 0;
 
                 $.each(data, function (key) {

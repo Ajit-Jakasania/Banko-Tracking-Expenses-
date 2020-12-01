@@ -22,12 +22,12 @@ public class UserGroupController {
 
 
     @GetMapping(value = "/userGroups")
-    public @ResponseBody String getUser(@RequestParam(required = false, defaultValue = "") String username) {
+    public @ResponseBody String getUserGroups(@RequestParam(required = false, defaultValue = "") int user_id) {
         ArrayList<HashMap<String,String>> userGroup = new ArrayList<HashMap<String,String>>();
         String json = null;
 
         try {
-            userGroup = UserGroup.getUserGroup(username);
+            userGroup = UserGroup.getUserGroup(user_id);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

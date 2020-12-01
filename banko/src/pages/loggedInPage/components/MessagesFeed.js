@@ -37,11 +37,13 @@ function MessagesFeed() {
 
     })
 
+
+    //for this get method we need to get each group id the user is in
     //write java for this
     useEffect(() => {
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/getMessageGroups',
+            url: 'http://localhost:8080/userGroupMessages',
             type: 'get',
             dataType: 'json',
             //Im assuming you wanted global variable state to get state.user_id

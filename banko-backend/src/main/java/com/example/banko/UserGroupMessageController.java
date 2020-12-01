@@ -22,7 +22,7 @@ public class UserGroupMessageController {
 
 
     @GetMapping(value = "/userGroupMessages")
-    public @ResponseBody String getUser(@RequestParam(required = false, defaultValue = "") int group_id) {
+    public @ResponseBody String getUserGroupMessages(@RequestParam(required = false, defaultValue = "") int group_id) {
         ArrayList<HashMap<String,String>> userGroup = new ArrayList<HashMap<String,String>>();
         String json = null;
 
