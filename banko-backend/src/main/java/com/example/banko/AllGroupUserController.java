@@ -14,32 +14,31 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-public class UserGroupController {
+public class AllGroupUserController {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
     @CrossOrigin
 
 
-    @GetMapping(value = "/userGroups")
-    public @ResponseBody String getUserGroups(@RequestParam(required = false, defaultValue = "") int user_id) {
-        ArrayList<HashMap<String,String>> userGroup = new ArrayList<HashMap<String,String>>();
+    @GetMapping(value = "/allGroupUser")
+    public @ResponseBody String getAllGroupUser(@RequestParam(required = false, defaultValue = "") int group_id) {
+        ArrayList<HashMap<String,String>> allGroupUser = new ArrayList<HashMap<String,String>>();
         String json = null;
 
         try {
-            userGroup = UserGroup.getUserGroup(user_id);
+            allGroupUser = AllGroupUser.getGroupUser(group_id);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
         try {
-            json = new ObjectMapper().writeValueAsString(userGroup);
+            json = new ObjectMapper().writeValueAsString(allGroupUser);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         return json;
     }
-
 }

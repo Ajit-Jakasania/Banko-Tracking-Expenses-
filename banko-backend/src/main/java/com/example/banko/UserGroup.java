@@ -13,11 +13,10 @@ public class UserGroup {
     private int group_id;
 
 
-    public static ArrayList<HashMap<String,String>> getUserGroup(String username) throws SQLException {
+    public static ArrayList<HashMap<String,String>> getUserGroup(int user_id) throws SQLException {
         Connection connection = BankoBackendServer.connection;
         ArrayList<HashMap<String,String>> listGroups = new ArrayList<HashMap<String,String>>();
 
-        int user_id = getUserId(username,connection);
         String selectSql = "SELECT group_id, group_name, date_created, date_joined FROM omjmf6vzmpqpgc0p.user_in_group JOIN omjmf6vzmpqpgc0p.group_list USING (group_id) WHERE user_id =" + user_id ;
         Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = statement.executeQuery(selectSql);

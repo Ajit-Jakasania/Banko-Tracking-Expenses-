@@ -15,27 +15,27 @@ function GroupsFeed() {
     useEffect(() => {
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/getGroups',
+            url: 'http://localhost:8080/userGroups',
             type: 'get',
             dataType: 'json',
             data: { user_id: state.id },
             success: function (data) {
 
+                console.log(data);
                 var i = 0;
-
                 $.each(data, function (key) {
-
-                    groups[i] = key;
+                    
+                    groups[i] = data[key];
+                    console.log(groups[i]);
                     i++;
-
                 });
 
             },
             error: function (request, status, error) {
                 console.log(request.responseText);
             }
-
         });
+
     })
     return (
         <div className={styles.GroupsFeed}>
