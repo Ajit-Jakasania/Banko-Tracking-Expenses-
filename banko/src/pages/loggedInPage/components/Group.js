@@ -10,25 +10,22 @@ import styles from './Group.module.css';
 */
 function Group(props) {
 
-    const [users, setUsers] = useState("");
+    const [users, setUsers] = useState();
 
     useEffect(() => {
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/getGroups',
+            url: 'http://localhost:8080/allGroupUser',
             type: 'get',
             dataType: 'json',
             data: { group_id: props.group_id },
             success: function (data) {
 
                 var i = 0;
+                console.log(data);
 
-                $.each(data, function (key) {
-
-                    users[i] = key;
-                    i++;
-
-                });
+                setUsers(data);
+               
 
             },
             error: function (request, status, error) {
@@ -39,15 +36,17 @@ function Group(props) {
     })
 
     return (
-        <div className={styles.Group}>
+        <p>we returned: {props.group_id}</p>
+        // <div className={styles.Group}>
 
-            <h2>{props.group_name}</h2>
+        //     <h2>{props.group_name}</h2>
+        //     <p>Entered the group</p>
 
-            {users.map(user => (
-                <p>User: {user}</p>
-            ))}
+        //     {users.map(user => (
+        //         <p>User: {user}</p>
+        //     ))}
 
-        </div>
+        // </div>
     )
 }
 
