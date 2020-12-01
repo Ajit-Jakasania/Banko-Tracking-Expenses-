@@ -1,6 +1,4 @@
-  
-import React, { useContext, useEffect, useState } from 'react'
-
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import $ from 'jquery'
 
@@ -10,6 +8,7 @@ import { Context } from '../../../Store';
 function FieldList() {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
 
+    //const [returnValue, setReturnValue] = useState("hihihi");
     const onSubmit = (jsonData) => {
 
         //removes empty values AKA optionals
@@ -28,7 +27,6 @@ function FieldList() {
             success: function (retValue) {
 
                 console.log(retValue);
-
                 //setReturnValue(retValue);
             },
             error: function (request, status, error) {
@@ -47,7 +45,7 @@ function FieldList() {
 
             <form className={styles.FieldList} onSubmit={handleSubmit(onSubmit)}>
                 <ul className={styles}>
-                    
+
                     <li>See it works OSAMA!!</li>
                     <li><input placeholder="First Name" name="first_name" ref={register({ required: true })} /></li>
                     {errors.first_name && 'First name is required.'}
