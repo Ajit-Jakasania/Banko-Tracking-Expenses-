@@ -1,18 +1,17 @@
 import React from 'react';
 
-import styles from './GroupsFeed.module.css';
-import JoinCreateGroup from './JoinCreateGroup';
-import Group from './Group';
+import styles from './TransactionsFeed.module.css';
 
-function GroupsFeed() {
 
-    const groups = new Array();
+function TransactionsFeed() {
+
+    const transactions = new Array();
 
     //write java for this
     useEffect(() => {
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/getGroups',
+            url: 'http://localhost:8080/getTransactions',
             type: 'get',
             dataType: 'json',
             data: { user_id: context.user_id },
@@ -22,7 +21,7 @@ function GroupsFeed() {
 
                 $.each(data, function (key) {
 
-                    groups[i] = key;
+                    transactions[i] = key;
                     i++;
 
                 });
@@ -35,16 +34,15 @@ function GroupsFeed() {
         });
     })
     return (
-        <div className={styles.GroupsFeed}>
-            <JoinCreateGroup />
+        <div className={styles.TransactionsFeed}>
 
-            <div className={styles.Groups}>
-                {groups.map(group => (
-                    <Group name={group[0]} user={group[1]} />
+            <div className={styles.Transactions}>
+                {transactions.map(transaction => (
+                    <Transaction content={transaction[0]} amount={transaction[1]} transaction_id={transactions[2]} isPaid={transactions[3]} />
                 ))}
             </div>
         </div>
     )
 }
 
-export default GroupsFeed;
+export default TransactionsFeed;

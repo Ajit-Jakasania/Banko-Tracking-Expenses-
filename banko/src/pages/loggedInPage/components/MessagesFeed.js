@@ -8,8 +8,10 @@ import { useEffect } from 'react';
 function MessagesFeed() {
 
 
-    //write java for this
-    getMessages((group_id_in) => {
+
+
+    $("#dropdown").on("submit", function () {
+
         $.ajax({
             contentType: "application/json;charset=utf-8",
             url: 'http://localhost:8080/getMessages',
@@ -18,18 +20,20 @@ function MessagesFeed() {
             data: { group_id: group_id_in },
             success: function (data) {
 
-                console.log(data);
 
-
-
+                $.each(data, function (key, value) {
+                    //add messages to the html dom
+                });
             },
             error: function (request, status, error) {
                 console.log(request.responseText);
             }
 
         });
-    });
 
+
+
+    })
 
     //write java for this
     useEffect(() => {
@@ -41,7 +45,6 @@ function MessagesFeed() {
             data: { user_id: context.user_id },
             success: function (data) {
 
-                //removes empty values AKA optionals
 
                 let dropdown = $('#dropdown');
                 dropdown.append('<option selected="true" disabled>Choose Group</option>');
@@ -69,8 +72,7 @@ function MessagesFeed() {
     return (
         <div className={styles.MessagesFeed}>
 
-            <select id="dropdown"></select>
-
+            <select id="dropdown" onchange="this.form.submit()"></select>
 
         </div>
     )
