@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 
 import $ from 'jquery'
-import { useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form'
 
 import styles from './FieldList.module.css'
-import InputField from './InputField'
-import InputButton from './InputButton'
-import { Context } from '../../../Store'; //remove possibly
+import InputField from './InputField';
+import InputButton from './InputButton';
+import { Context } from '../../../Store' //remove possibly
 
 
 function FieldList() {
