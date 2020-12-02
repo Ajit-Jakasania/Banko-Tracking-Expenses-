@@ -4,7 +4,7 @@ import LoginContainer from './components/LoginContainer';
 
 
 
-function LoginPage(props) {
+function LoginPage() {
     return (
         <div>
             <LoginContainer />

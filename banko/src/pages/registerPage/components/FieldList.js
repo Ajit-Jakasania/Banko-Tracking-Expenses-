@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import $ from 'jquery'
 
-import styles from './FieldList.module.css'
+import styles from './FieldList.module.css';
 
 function FieldList() {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
