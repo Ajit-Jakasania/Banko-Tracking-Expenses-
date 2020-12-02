@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from 'react';
-import $ from 'jquery'
-import Transaction from './Transaction'
+import React, { useContext, useEffect, useState } from 'react';
+
+import $ from 'jquery';
+import Transaction from './Transaction';
 import styles from './TransactionsFeed.module.css';
 import { Context } from '../../../Store';
 
@@ -8,10 +9,13 @@ import { Context } from '../../../Store';
 function TransactionsFeed() {
 
     const transactions = new Array();
-    const [state, useState] = useContext(Context);
+    const [state, setState] = useContext(Context);
+    const [flag, setFlag] = useState(0);
 
     //write java for this
-    useEffect(() => {
+
+    function getTransactions() {
+
         $.ajax({
             contentType: "application/json;charset=utf-8",
             url: 'http://localhost:8080/getTransactions',
@@ -23,11 +27,11 @@ function TransactionsFeed() {
             success: function (data) {
 
                 var i = 0;
-                console.log(data);
 
                 $.each(data, function (key) {
 
-                    transactions[i] = key;
+                    transactions[i] = data[key];
+                    console.log(data[key]);
                     i++;
 
                 });
@@ -38,18 +42,29 @@ function TransactionsFeed() {
             }
 
         });
-    })
-    return (
-        <div className={styles.TransactionsFeed}>
+    }
+    if (flag == 0) {
+        getTransactions();
+        setFlag(1);
+    }
 
-            <div className={styles.Transactions}>
-                <p>We are mapping zero transactions atm.</p>
-                {transactions.map(transaction => (
-                    <Transaction content={transaction[0]} amount={transaction[1]} transaction_id={transactions[2]} isPaid={transactions[3]} />
-                ))}
+
+    if (flag == 1) {
+        return (
+            <div className={styles.TransactionsFeed}>
+
+                <div className={styles.Transactions}>
+                    <p>We are mapping zero transactions atm.</p>
+                    {/* {transactions.map(transaction => (
+                        // <Transaction content={transaction.transaction_content} amount={transaction.amount} transaction_id={transactions.transaction_id} isPaid={transactions[3]} />
+                    ))} */}
+                </div>
             </div>
-        </div>
-    )
+        )
+    } else {
+        return (<p>no trans</p>)
+    }
+
 }
 
 export default TransactionsFeed;

@@ -13,38 +13,32 @@ function MessagesFeed() {
     const [flag, setFlag] = useState(0);
     const [messages, setMessages] = useState(new Array());
 
-    $("#dropdown").on("submit", function () {
 
-        console.log("hwwldgjds");
+    function onSub() {
+        $.ajax({
+            contentType: "application/json;charset=utf-8",
+            url: 'http://localhost:8080/userGroupMessages',
+            type: 'get',
+            dataType: 'json',
+            data: { group_id: state.group_id },
+            success: function (data) {
+
+                console.log(data);
+                // $.each(data, function (key, value) {
+                //     //add messages to the html dom
+                // });
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+
+        });
         return false;
-        // $.ajax({
-        //     contentType: "application/json;charset=utf-8",
-        //     url: 'http://localhost:8080/getMessages',
-        //     type: 'get',
-        //     dataType: 'json',
-        //     //Im assuming you wanted the global id variable state.group_id
-        //     //data: { group_id: group_id_in },
-        //     data: { group_id: state.group_id },
-        //     success: function (data) {
-
-
-        //         $.each(data, function (key, value) {
-        //             //add messages to the html dom
-        //         });
-        //     },
-        //     error: function (request, status, error) {
-        //         console.log(request.responseText);
-        //     }
-
-        // });
+    }
 
 
 
-    })
-
-
-
-    function getMessages() {
+    function getGroups() {
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
@@ -74,7 +68,7 @@ function MessagesFeed() {
     }
 
     if (flag == 0) {
-        getMessages();
+        getGroups();
         setFlag(1);
     }
 
@@ -83,7 +77,7 @@ function MessagesFeed() {
 
 
 
-            <select id="dropdown" onchange='getMessages();' >
+            <select id="dropdown" onChange={onSub()} >
 
                 {groupNames.map(name => (
                     <option >{name}</option>
