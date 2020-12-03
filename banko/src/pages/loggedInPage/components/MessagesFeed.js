@@ -49,6 +49,7 @@ function MessagesFeed() {
     function change(event) {
 
         if (event.target.value == 0) return false;
+
         setGroup(event.target.value);
 
 
@@ -57,7 +58,7 @@ function MessagesFeed() {
             url: 'http://localhost:8080/userGroupMessages',
             type: 'get',
             dataType: 'json',
-            data: { group_name: group },
+            data: { group_name: event.target.value },
             success: function (data) {
                 let temp = data;
 
