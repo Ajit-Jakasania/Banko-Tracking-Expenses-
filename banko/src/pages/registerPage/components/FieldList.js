@@ -7,6 +7,7 @@ import { Context } from '../../../Store';
 
 function FieldList() {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
+    const [message, setMessage] = useState("");
 
     //const [returnValue, setReturnValue] = useState("hihihi");
     const onSubmit = (jsonData) => {
@@ -27,10 +28,9 @@ function FieldList() {
             success: function (retValue) {
 
                 console.log(retValue);
-                //setReturnValue(retValue);
             },
             error: function (request, status, error) {
-                console.log(request.responseText);
+                setMessage(request.responseText);
             }
         });
 
@@ -90,7 +90,7 @@ function FieldList() {
                 </ul>
 
             </form>
-
+            <p>{message}</p>
         </div>
     );
 }

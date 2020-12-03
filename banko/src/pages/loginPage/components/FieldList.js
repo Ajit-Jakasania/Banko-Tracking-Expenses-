@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 
 import $ from 'jquery'
 import { useForm } from 'react-hook-form';
@@ -13,6 +13,7 @@ function FieldList() {
 
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
     const [state, setState] = useContext(Context);
+    const [message, setMessage] = useState("");
     const onSubmit = (jsonData) => {
 
         $.ajax({
@@ -22,19 +23,21 @@ function FieldList() {
             dataType: 'json',
             data: JSON.stringify(jsonData),
             success: function (retValue) {
-                if (retValue == -1) console.log("bad");
+                if (retValue == -1) setMessage("Incorrect Information Entered!");
+
                 else {
                     console.log("your id is " + retValue);
                     sessionStorage.setItem("id", retValue);
 
                     setState({ id: retValue });  //remove later possibly
-
+                    setMessage("Logged In!");
                 }
 
 
             },
             error: function (request, status, error) {
-                console.log(request.responseText);
+                setMessage("Failed HTTP request!");
+
             }
 
         });
@@ -57,7 +60,7 @@ function FieldList() {
                 </ul>
 
             </form>
-
+            <p>{message}</p>
         </div>
     );
 }
