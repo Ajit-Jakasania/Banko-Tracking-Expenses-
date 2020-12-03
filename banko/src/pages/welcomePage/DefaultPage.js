@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import PageContent from './components/PageContent';
 import styles from './components/PageContent.module.css';
 import logo from './components/happyMan.jpg';
-import imageStyles from './components/image.module.css';
+//import imageStyles from './components/image.module.css';
 
 
 
