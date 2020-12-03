@@ -23,6 +23,7 @@ public class SendMessageController {
     @PostMapping(value = "/message")
     public @ResponseBody String sendMessage(@RequestBody Message message) {
         int status = 0;
+
         try {
             message.sendGroupMessage();
         } catch (SQLException throwables) {
