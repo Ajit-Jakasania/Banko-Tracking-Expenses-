@@ -8,7 +8,7 @@ import { Context } from '../../../Store';
 
 function TransactionsFeed() {
 
-    const transactions = new Array();
+    const [transactions, setTransactions] = useState(new Array());
     const [state, setState] = useContext(Context);
     const [flag, setFlag] = useState(0);
 
@@ -28,14 +28,7 @@ function TransactionsFeed() {
 
                 var i = 0;
 
-                $.each(data, function (key) {
-
-                    transactions[i] = data[key];
-                    console.log(data[key]);
-                    i++;
-
-                });
-
+                setTransactions(data);
             },
             error: function (request, status, error) {
                 console.log(request.responseText);
@@ -54,10 +47,10 @@ function TransactionsFeed() {
             <div className={styles.TransactionsFeed}>
 
                 <div className={styles.Transactions}>
-                    <p>We are mapping zero transactions atm.</p>
-                    {/* {transactions.map(transaction => (
+                    {transactions.map(transaction => (
+                        <p>{transaction.transaction_content} ${transaction.amount}</p>
                         // <Transaction content={transaction.transaction_content} amount={transaction.amount} transaction_id={transactions.transaction_id} isPaid={transactions[3]} />
-                    ))} */}
+                    ))}
                 </div>
             </div>
         )
