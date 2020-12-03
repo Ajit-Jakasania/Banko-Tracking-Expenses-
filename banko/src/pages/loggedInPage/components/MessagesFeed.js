@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import $ from 'jquery';
 
@@ -14,7 +15,33 @@ function MessagesFeed() {
     const [messages, setMessages] = useState(new Array());
     const [group, setGroup] = useState(0);
 
+    const { register, handleSubmit, errors } = useForm(); // initialize the hook
 
+
+    const sendMessage = (messageContent) => {
+        let message = messageContent.message;
+        let currentGroup = group;
+
+        const data = "{\"content\" : \"" + message + "\", \"user_id\" : \"" + state.id + "\", \"group_name\": \"" + currentGroup + "\" }";
+
+        var obj = { "content": message, "user_id": state.id, "group_name": currentGroup };
+        $.ajax({
+            contentType: "application/json;charset=utf-8",
+            url: 'http://localhost:8080/message',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(obj),
+            success: function (data) {
+
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+                updateMessages(group);
+
+            }
+
+        });
+    }
 
 
 
@@ -44,6 +71,27 @@ function MessagesFeed() {
             }
 
         });
+    }
+
+    function updateMessages(groupName) {
+
+        $.ajax({
+            contentType: "application/json;charset=utf-8",
+            url: 'http://localhost:8080/userGroupMessages',
+            type: 'get',
+            dataType: 'json',
+            data: { group_name: groupName },
+            success: function (data) {
+                let temp = data;
+
+                setMessages(temp);
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+
+        });
+        return false;
     }
 
     function change(event) {
@@ -99,6 +147,11 @@ function MessagesFeed() {
 
             </div>
 
+            <form onSubmit={handleSubmit(sendMessage)}>
+                <li><input placeholder="Send a message!" name="message" ref={register({ required: true })} /></li>
+                {errors.message && 'Content is required.'}
+                <li><input type="submit" value="message" /></li>
+            </form>
 
         </div >
     )

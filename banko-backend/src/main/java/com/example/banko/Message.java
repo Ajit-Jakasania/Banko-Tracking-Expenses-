@@ -3,14 +3,20 @@ package com.example.banko;
 import java.sql.*;
 
 public class Message {
-    private String content;
-    private int user_id;
-    private int group_id;
+    public String content;
+    public int user_id;
+    public String group_name;
 
-    public Message(String content, int user_id, int group_id) {
+    public Message() {
+        content = null;
+        user_id = -1;
+        group_name = null;
+    }
+
+    public Message(String content, int user_id, String group_name) {
         this.content = content;
         this.user_id = user_id;
-        this.group_id = group_id;
+        this.group_name = group_name;
     }
 
     public int sendGroupMessage() throws SQLException {
@@ -23,7 +29,7 @@ public class Message {
         if (messageContentID == -1)
             return -1;
 
-        if (addMessage(messageContentID, group_id, user_id, connection) == 1)
+        if (addMessage(messageContentID, group_name, user_id, connection) == 1)
             return 1;
         else
             return -1;
@@ -48,12 +54,12 @@ public class Message {
 
             statement.executeUpdate(query);
 
-            query = "SELECT LAST_INSERTED_ID()";
+            query = "SELECT message_content_id FROM omjmf6vzmpqpgc0p.message_content ORDER BY message_content_id DESC LIMIT 1";
 
             ResultSet rs = statement.executeQuery(query);
             // gets last inserted key, aka the content id we just inserted into the table
             if (rs.next())
-                return Integer.parseInt(rs.getString("message_content_id")); // returns the message content id
+                return rs.getInt("message_content_id"); // returns the message content id
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,11 +67,12 @@ public class Message {
         return -1;
     }
 
-    private static int addMessage(int messageContentID, int group_id, int user_id, Connection connection) {
+    private static int addMessage(int messageContentID, String group_name, int user_id, Connection connection) {
         String query;
+        String groupid = "(SELECT group_id FROM omjmf6vzmpqpgc0p.group_list WHERE group_name = '" + group_name + "')";
 
         query = "INSERT INTO omjmf6vzmpqpgc0p.message (message_content_id, group_id, user_id) VALUES ("
-                + messageContentID + ", " + group_id + ", " + user_id + ", NOW())";
+                + messageContentID + ", " + groupid + ", " + user_id + ")";
 
         try {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
