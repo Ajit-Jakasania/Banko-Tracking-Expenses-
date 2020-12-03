@@ -22,6 +22,7 @@ public class CreateTransactionController {
     public @ResponseBody String sendMessage(@RequestBody Transaction transaction) {
         int status = 0;
         try {
+
             transaction.createTransaction();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -50,7 +51,7 @@ public class CreateTransactionController {
 
     @GetMapping(value = "/getTransactions")
     public @ResponseBody String getTransactions(@RequestParam int user_id) {
-        ArrayList<HashMap<String,String>> userTransaction = new ArrayList<HashMap<String,String>>();
+        ArrayList<HashMap<String, String>> userTransaction = new ArrayList<HashMap<String, String>>();
         String json = null;
 
         userTransaction = Transaction.getUserTransactions(user_id);
@@ -65,13 +66,9 @@ public class CreateTransactionController {
     }
 
     @PostMapping(value = "/closeTransaction")
-    public @ResponseBody String closeTransaction(@RequestBody Transaction transaction) {
+    public @ResponseBody String closingTransaction(@RequestBody Transaction transaction) throws SQLException {
         int status = 0;
-        try {
-            transaction.closeTransaction();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        status = transaction.closeTransaction();
 
         if (status == 1)
             return "Transaction closed";
