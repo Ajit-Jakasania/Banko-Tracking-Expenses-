@@ -12,7 +12,7 @@ import { Context } from '../../../Store'; //remove possibly
 function FieldList() {
 
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
-    const [state, setState] = useContext(Context);    
+    const [state, setState] = useContext(Context);
     const onSubmit = (jsonData) => {
 
         $.ajax({
@@ -53,7 +53,7 @@ function FieldList() {
                     {errors.hashed_password && 'Password is required.'}
 
 
-                    <li><input type="submit" /></li>
+                    <li><input type="submit" value="Log In" /></li>
                 </ul>
 
             </form>

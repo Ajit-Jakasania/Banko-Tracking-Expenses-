@@ -84,7 +84,7 @@ function FieldList() {
                     <li><input placeholder="Birth Year" name="birth_year" ref={register({ required: true, pattern: /\d+/ })} /></li>
                     {errors.birth_year && 'Please enter number for year.'}
 
-                    <li><input type="submit" /></li>
+                    <li><input type="submit" value="Register" /></li>
 
 
                 </ul>

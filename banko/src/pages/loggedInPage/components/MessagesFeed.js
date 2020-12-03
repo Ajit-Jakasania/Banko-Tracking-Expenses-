@@ -12,29 +12,9 @@ function MessagesFeed() {
     const [groupNames, setGroupNames] = useState(new Array());
     const [flag, setFlag] = useState(0);
     const [messages, setMessages] = useState(new Array());
+    const [group, setGroup] = useState(0);
 
 
-    function onSub() {
-        $.ajax({
-            contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/userGroupMessages',
-            type: 'get',
-            dataType: 'json',
-            data: { group_id: state.group_id },
-            success: function (data) {
-
-                console.log(data);
-                // $.each(data, function (key, value) {
-                //     //add messages to the html dom
-                // });
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            }
-
-        });
-        return false;
-    }
 
 
 
@@ -49,12 +29,11 @@ function MessagesFeed() {
             success: function (data) {
 
 
-                let temp = groupNames;
+                let temp = new Array();
                 let i = 0;
                 $.each(data, function (key) {
 
-                    let value = data[key].group_name;
-                    temp[i] = value;
+                    temp[i] = data[key].group_name;
                     i++;
                 });
 
@@ -67,6 +46,32 @@ function MessagesFeed() {
         });
     }
 
+    function change(event) {
+
+        if (event.target.value == 0) return false;
+        setGroup(event.target.value);
+
+
+        $.ajax({
+            contentType: "application/json;charset=utf-8",
+            url: 'http://localhost:8080/userGroupMessages',
+            type: 'get',
+            dataType: 'json',
+            data: { group_name: group },
+            success: function (data) {
+                let temp = data;
+
+                setMessages(temp);
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+
+        });
+        return false;
+    }
+
+
     if (flag == 0) {
         getGroups();
         setFlag(1);
@@ -76,16 +81,23 @@ function MessagesFeed() {
         <div className={styles.MessagesFeed}>
 
 
+            <form action="onSub()">
 
-            <select id="dropdown" onChange={onSub()} >
+                <select id="dropdown" onChange={change} value={group}>
+                    <option value="0"> Choose a Group</option>
+                    {groupNames.map(name => (
+                        <option value={name}>{name}</option>
+                    ))}
+                </select>
+            </form>
 
-                {groupNames.map(name => (
-                    <option >{name}</option>
+            <div>
+                {messages.map(message => (
+                    <p> {message.date_sent}  {message.username} : {message.content} </p>
                 ))}
 
-                <input type="submit" value="hi"></input>
+            </div>
 
-            </select>
 
         </div >
     )

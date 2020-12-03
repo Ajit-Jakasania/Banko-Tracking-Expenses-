@@ -22,8 +22,9 @@ function Group(props) {
             dataType: 'json',
             data: { group_id: props.group_id },
             success: function (data) {
-                let temp = users;
+                let temp = new Array();
                 var i = 0;
+
 
                 $.each(data, function (key) {
                     temp[i] = data[i].username;
@@ -31,11 +32,11 @@ function Group(props) {
                     i++;
                 });
 
-
+                /**
+                 * Can only call setState once in a function call
+                 * If setState to a value that was initialized using the state, does not rerender component
+                 */
                 setUsers(temp);
-
-
-
 
             },
             error: function (request, status, error) {
@@ -85,6 +86,8 @@ function Group(props) {
                 <h2>{props.group_name}</h2>
 
                 <div>
+
+
                     {users.map(user => (
                         <p>User: {user}</p>
                     ))}
