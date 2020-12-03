@@ -23,7 +23,7 @@ function MessagesFeed() {
         let currentGroup = group;
 
         const data = "{\"content\" : \"" + message + "\", \"user_id\" : \"" + state.id + "\", \"group_name\": \"" + currentGroup + "\" }";
-
+        $("#sendMsg")[0].reset();
         var obj = { "content": message, "user_id": state.id, "group_name": currentGroup };
         $.ajax({
             contentType: "application/json;charset=utf-8",
@@ -147,10 +147,10 @@ function MessagesFeed() {
 
             </div>
 
-            <form onSubmit={handleSubmit(sendMessage)}>
-                <li><input placeholder="Send a message!" name="message" ref={register({ required: true })} /></li>
+            <form id="sendMsg" onSubmit={handleSubmit(sendMessage)}>
+                <input placeholder="Send a message!" name="message" ref={register({ required: true })} />
                 {errors.message && 'Content is required.'}
-                <li><input type="submit" value="message" /></li>
+                <input className={styles.sendMsg} type="submit" value="Send" />
             </form>
 
         </div >

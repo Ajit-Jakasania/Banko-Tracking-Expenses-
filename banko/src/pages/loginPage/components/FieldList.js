@@ -26,7 +26,6 @@ function FieldList() {
                 if (retValue == -1) setMessage("Incorrect Information Entered!");
 
                 else {
-                    console.log("your id is " + retValue);
                     sessionStorage.setItem("id", retValue);
 
                     setState({ id: retValue });  //remove later possibly
