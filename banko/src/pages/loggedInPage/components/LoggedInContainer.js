@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import styles from './LoggedInContainer.module.css';
 import GroupsFeed from './GroupsFeed';

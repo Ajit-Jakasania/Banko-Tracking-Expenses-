@@ -26,8 +26,6 @@ function TransactionsFeed() {
             data: { user_id: state.id },
             success: function (data) {
 
-                var i = 0;
-
                 setTransactions(data);
             },
             error: function (request, status, error) {
@@ -48,14 +46,14 @@ function TransactionsFeed() {
 
                 <div className={styles.Transactions}>
                     {transactions.map(transaction => (
-                        <p>{transaction.transaction_content} ${transaction.amount}</p>
-                        // <Transaction content={transaction.transaction_content} amount={transaction.amount} transaction_id={transactions.transaction_id} isPaid={transactions[3]} />
+
+                        <Transaction amount={transaction.amount} transaction_id={transaction.transaction_id} content={transaction.transaction_content} date_closed={transaction.date_closed} />
                     ))}
                 </div>
             </div>
         )
     } else {
-        return (<p>no trans</p>)
+        return (<p>no transactions!</p>)
     }
 
 }

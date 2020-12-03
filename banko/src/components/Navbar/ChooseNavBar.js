@@ -19,24 +19,17 @@ function ChooseNavBar() {
 
     const [state, setState] = useState(0);
     const [isUserLoggedIn, setUserLoggedIn] = useContext(Context);
-    
-    /*
-    const handleClick = async () => {
-        sessionStorage.setItem("id", 1);
-        setState(sessionStorage.getItem("id"));
-    }
-    */
-    useEffect(() => {
-        console.log(isUserLoggedIn.id);
-    })
+
+
+
 
     if (!isUserLoggedIn.id) {
-        return(
-            <NavbarDefault />    
+        return (
+            <NavbarDefault />
         );
     }
-    return(
-            <NavbarLoggedIn />
+    return (
+        <NavbarLoggedIn />
     )
 }
 

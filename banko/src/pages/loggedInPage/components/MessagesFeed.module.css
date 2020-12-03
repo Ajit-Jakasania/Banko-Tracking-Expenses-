@@ -1,0 +1,10 @@
+.MessagesFeed {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.sendMsg {
+    background-color: darkgray;
+    width:3vw;
+}
