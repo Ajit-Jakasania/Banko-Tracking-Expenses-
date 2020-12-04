@@ -3,6 +3,10 @@
     flex-direction: row;
     justify-content: space-between;
 
+    position: relative;
+    left:0;
+    bottom:0;
+    right:0;    
     background-color: #333;
     overflow: hidden;
 }

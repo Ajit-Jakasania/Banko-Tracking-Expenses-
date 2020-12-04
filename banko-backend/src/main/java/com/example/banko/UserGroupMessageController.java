@@ -20,14 +20,13 @@ public class UserGroupMessageController {
 
     @CrossOrigin
 
-
     @GetMapping(value = "/userGroupMessages")
-    public @ResponseBody String getUserGroupMessages(@RequestParam(required = false, defaultValue = "") int group_id) {
-        ArrayList<HashMap<String,String>> userGroup = new ArrayList<HashMap<String,String>>();
+    public @ResponseBody String getUserGroupMessages(@RequestParam String group_name) {
+        ArrayList<HashMap<String, String>> userGroup = new ArrayList<HashMap<String, String>>();
         String json = null;
 
         try {
-            userGroup = UserGroupMessage.getUserGroupMessage(group_id);
+            userGroup = UserGroupMessage.getUserGroupMessage(group_name);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

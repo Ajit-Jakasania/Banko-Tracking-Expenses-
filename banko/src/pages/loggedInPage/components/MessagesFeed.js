@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import $ from 'jquery';
 
@@ -12,39 +13,39 @@ function MessagesFeed() {
     const [groupNames, setGroupNames] = useState(new Array());
     const [flag, setFlag] = useState(0);
     const [messages, setMessages] = useState(new Array());
+    const [group, setGroup] = useState(0);
 
-    $("#dropdown").on("submit", function () {
-
-        console.log("hwwldgjds");
-        return false;
-        // $.ajax({
-        //     contentType: "application/json;charset=utf-8",
-        //     url: 'http://localhost:8080/getMessages',
-        //     type: 'get',
-        //     dataType: 'json',
-        //     //Im assuming you wanted the global id variable state.group_id
-        //     //data: { group_id: group_id_in },
-        //     data: { group_id: state.group_id },
-        //     success: function (data) {
+    const { register, handleSubmit, errors } = useForm(); // initialize the hook
 
 
-        //         $.each(data, function (key, value) {
-        //             //add messages to the html dom
-        //         });
-        //     },
-        //     error: function (request, status, error) {
-        //         console.log(request.responseText);
-        //     }
+    const sendMessage = (messageContent) => {
+        let message = messageContent.message;
+        let currentGroup = group;
 
-        // });
+        const data = "{\"content\" : \"" + message + "\", \"user_id\" : \"" + state.id + "\", \"group_name\": \"" + currentGroup + "\" }";
+        $("#sendMsg")[0].reset();
+        var obj = { "content": message, "user_id": state.id, "group_name": currentGroup };
+        $.ajax({
+            contentType: "application/json;charset=utf-8",
+            url: 'http://localhost:8080/message',
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(obj),
+            success: function (data) {
+
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+                updateMessages(group);
+
+            }
+
+        });
+    }
 
 
 
-    })
-
-
-
-    function getMessages() {
+    function getGroups() {
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
@@ -55,12 +56,11 @@ function MessagesFeed() {
             success: function (data) {
 
 
-                let temp = groupNames;
+                let temp = new Array();
                 let i = 0;
                 $.each(data, function (key) {
 
-                    let value = data[key].group_name;
-                    temp[i] = value;
+                    temp[i] = data[key].group_name;
                     i++;
                 });
 
@@ -73,8 +73,56 @@ function MessagesFeed() {
         });
     }
 
+    function updateMessages(groupName) {
+
+        $.ajax({
+            contentType: "application/json;charset=utf-8",
+            url: 'http://localhost:8080/userGroupMessages',
+            type: 'get',
+            dataType: 'json',
+            data: { group_name: groupName },
+            success: function (data) {
+                let temp = data;
+
+                setMessages(temp);
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+
+        });
+        return false;
+    }
+
+    function change(event) {
+
+        if (event.target.value == 0) return false;
+
+        setGroup(event.target.value);
+
+
+        $.ajax({
+            contentType: "application/json;charset=utf-8",
+            url: 'http://localhost:8080/userGroupMessages',
+            type: 'get',
+            dataType: 'json',
+            data: { group_name: event.target.value },
+            success: function (data) {
+                let temp = data;
+
+                setMessages(temp);
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+            }
+
+        });
+        return false;
+    }
+
+
     if (flag == 0) {
-        getMessages();
+        getGroups();
         setFlag(1);
     }
 
@@ -82,16 +130,28 @@ function MessagesFeed() {
         <div className={styles.MessagesFeed}>
 
 
+            <form action="onSub()">
 
-            <select id="dropdown" onchange='getMessages();' >
+                <select id="dropdown" onChange={change} value={group}>
+                    <option value="0"> Choose a Group</option>
+                    {groupNames.map(name => (
+                        <option value={name}>{name}</option>
+                    ))}
+                </select>
+            </form>
 
-                {groupNames.map(name => (
-                    <option >{name}</option>
+            <div>
+                {messages.map(message => (
+                    <p> {message.date_sent}  {message.username} : {message.content} </p>
                 ))}
 
-                <input type="submit" value="hi"></input>
+            </div>
 
-            </select>
+            <form id="sendMsg" onSubmit={handleSubmit(sendMessage)}>
+                <input placeholder="Send a message!" name="message" ref={register({ required: true })} />
+                {errors.message && 'Content is required.'}
+                <input className={styles.sendMsg} type="submit" value="Send" />
+            </form>
 
         </div >
     )

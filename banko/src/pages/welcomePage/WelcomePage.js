@@ -4,8 +4,6 @@ import PageContent from './components/PageContent';
 
 
 
-
-
 function WelcomePage({ props }) {
 
     return (
@@ -14,4 +12,5 @@ function WelcomePage({ props }) {
         </div>
     );
 }
+
 export default WelcomePage;

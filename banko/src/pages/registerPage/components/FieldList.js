@@ -6,6 +6,7 @@ import styles from './FieldList.module.css';
 
 function FieldList() {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
+    const [message, setMessage] = useState("");
 
     //const [returnValue, setReturnValue] = useState("hihihi");
     const onSubmit = (jsonData) => {
@@ -26,10 +27,9 @@ function FieldList() {
             success: function (retValue) {
 
                 console.log(retValue);
-                //setReturnValue(retValue);
             },
             error: function (request, status, error) {
-                console.log(request.responseText);
+                setMessage(request.responseText);
             }
         });
 
@@ -83,13 +83,13 @@ function FieldList() {
                     <li><input placeholder="Birth Year" name="birth_year" ref={register({ required: true, pattern: /\d+/ })} /></li>
                     {errors.birth_year && 'Please enter number for year.'}
 
-                    <li><input type="submit" /></li>
+                    <li><input type="submit" value="Register" /></li>
 
 
                 </ul>
 
             </form>
-
+            <p>{message}</p>
         </div>
     );
 }
