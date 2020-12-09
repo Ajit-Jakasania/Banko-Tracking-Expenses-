@@ -48,8 +48,12 @@ function Transaction(props) {
             {(props.date_closed == "0000-00-00 00:00:00" || props.date_closed == null) ?
                 <div className={styles.Transaction}>This is <b>unpaid:</b> <form onSubmit={handleSubmit(payTransaction)}>
                     <button name="event" value={jsonData} ref={register({ required: true })} > Pay Now</button>
-                </form></div> : <div>This is <b>paid</b> on {props.date_closed}</div>
+                </form></div> : <div>This is <b>paid</b> on {props.date_closed}
+                </div>
             }
+
+            <br></br>
+            {(props.bill) ? <div>The bill image is hosted at {props.bill}</div> : <div></div>}
 
         </div >
     )

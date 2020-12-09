@@ -45,7 +45,7 @@ function TransactionsFeed() {
                 <div className={styles.Transactions}>
                     {transactions.map(transaction => (
 
-                        <Transaction amount={transaction.amount} transaction_id={transaction.transaction_id} content={transaction.transaction_content} date_closed={transaction.date_closed} />
+                        <Transaction amount={transaction.amount} transaction_id={transaction.transaction_id} content={transaction.transaction_content} date_closed={transaction.date_closed} bill={transaction.photo_url} />
                     ))}
                 </div>
             </div>

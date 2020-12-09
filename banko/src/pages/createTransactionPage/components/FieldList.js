@@ -7,7 +7,7 @@ import { Context } from '../../../Store';
 function FieldList() {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
     const [state, setState] = useContext(Context);
-    const [text, setText] = useState("dong");
+    const [text, setText] = useState("");
 
     const onSubmit = (jsonData) => {
 
