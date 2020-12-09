@@ -10,7 +10,7 @@ public class Transaction {
     public String transaction_content;
     public double amount;
     public String group_name;
-
+    public String bill;
     public int transaction_id;
 
     public Transaction() {
@@ -18,18 +18,23 @@ public class Transaction {
         transaction_content = null;
         amount = -1;
         transaction_id = -1;
+        bill = null;
     }
 
     public Transaction(String group_name, String transaction_content, double amount) {
         this.group_name = group_name;
         this.transaction_content = transaction_content;
         this.amount = amount;
+        bill = null;
+
     }
 
     public Transaction(int group_id, String transaction_content, double amount) {
         this.group_id = group_id;
         this.transaction_content = transaction_content;
         this.amount = amount;
+        bill = null;
+
     }
 
     public Transaction(int transaction_id) {
@@ -86,7 +91,11 @@ public class Transaction {
             for (String s : map.keySet()) {
                 String group_id = map.get(s);
                 int tempGroup_id = Integer.parseInt(group_id);
-                String query = "SELECT * FROM omjmf6vzmpqpgc0p.transaction WHERE group_id =" + tempGroup_id;
+                String query = "SELECT transaction.transaction_id, group_id, date_created, date_closed, transaction_content,"
+                        + " amount, photo_url  FROM omjmf6vzmpqpgc0p.transaction LEFT JOIN omjmf6vzmpqpgc0p.bill ON transaction.transaction_id = bill.transaction_id WHERE transaction.group_id ="
+                        + tempGroup_id
+                        + " UNION SELECT transaction.transaction_id, group_id, date_created, date_closed, transaction_content, amount, photo_url  "
+                        + "FROM omjmf6vzmpqpgc0p.transaction RIGHT JOIN omjmf6vzmpqpgc0p.bill ON transaction.transaction_id = bill.transaction_id WHERE transaction.transaction_id IS NULL";
                 try {
                     Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                             ResultSet.CONCUR_UPDATABLE);
@@ -100,6 +109,8 @@ public class Transaction {
                         userAllTransactionJSON.put("date_closed", (rs.getString("date_closed")));
                         userAllTransactionJSON.put("transaction_content", (rs.getString("transaction_content")));
                         userAllTransactionJSON.put("amount", Double.toString(rs.getDouble("amount")));
+                        userAllTransactionJSON.put("photo_url", (rs.getString("photo_url")));
+
                         listAllGroupTransactions.add(userAllTransactionJSON);
                     }
                 } catch (SQLException throwables) {
