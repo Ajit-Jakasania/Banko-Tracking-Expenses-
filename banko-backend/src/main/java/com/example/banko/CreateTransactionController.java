@@ -23,15 +23,15 @@ public class CreateTransactionController {
         int status = 0;
         try {
 
-            transaction.createTransaction();
+            status = transaction.createTransaction();
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
         if (status == 1)
-            return "Transaction made";
+            return "New Transaction Added!";
         else
-            return "Transaction not made";
+            return "New Transaction Failed to Add";
     }
 
     @PostMapping(value = "/bill")
