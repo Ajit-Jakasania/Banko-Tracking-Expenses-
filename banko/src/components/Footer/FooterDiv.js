@@ -3,10 +3,10 @@ import React from 'react';
 import styles from './FooterDiv.module.css'
 
 
-function FooterDiv({ text }) {
+function FooterDiv(props) {
     return (
         <div className={styles.FooterDiv}>
-            <a><i className="fab fa-github"></i>{text}</a>
+            <a href={props.gitLink}><i className="fab fa-github" ></i>{props.text}</a>
         </div>
     );
 }

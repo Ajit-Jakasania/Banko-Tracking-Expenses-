@@ -7,10 +7,10 @@ import FooterDiv from './FooterDiv'
 function GithubLinks() {
     return (
         <div className={styles.container}>
-            
-            <FooterDiv text="Gabe Github "  />
-            <FooterDiv text="Ajit Github" />
-            <FooterDiv text="Osama Github" />
+
+            <FooterDiv gitLink="https://github.com/irock194" text="Gabe Github " />
+            <FooterDiv gitLink="https://github.com/Ajit-Jakasania" text="Ajit Github" />
+            <FooterDiv gitLink="https://github.com/osamahan999/" text="Osama Github" />
 
 
 

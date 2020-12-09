@@ -9,10 +9,17 @@ import { Context } from '../../../Store';
 function Transaction(props) {
     const [flag, setFlag] = useState(0);
     const [state, setState] = useContext(Context);
+    const [showImage, setShowImage] = useState(0);
 
     const [jsonData, setJsonData] = useState(new Array());
 
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
+
+    const showImg = () => {
+        if (showImage == 0) setShowImage(1)
+        else setShowImage(0);
+    }
+
 
     const payTransaction = (event) => {
 
@@ -48,8 +55,16 @@ function Transaction(props) {
             {(props.date_closed == "0000-00-00 00:00:00" || props.date_closed == null) ?
                 <div className={styles.Transaction}>This is <b>unpaid:</b> <form onSubmit={handleSubmit(payTransaction)}>
                     <button name="event" value={jsonData} ref={register({ required: true })} > Pay Now</button>
-                </form></div> : <div>This is <b>paid</b> on {props.date_closed}</div>
+                </form></div> : <div>This is <b>paid</b> on {props.date_closed}
+                </div>
             }
+
+            <br></br>
+            <div>
+
+                {(props.bill) ? <div> <button onClick={showImg}>Show Bill</button> {(showImage == 1) && <img src={props.bill}></img>}</div> : <p></p>}
+
+            </div>
 
         </div >
     )

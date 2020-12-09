@@ -1,13 +1,13 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import $ from 'jquery'
 import styles from './FieldList.module.css'
 import { Context } from '../../../Store';
 
-function FieldList()
-{
+function FieldList() {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
     const [state, setState] = useContext(Context);
+    const [text, setText] = useState("");
 
     const onSubmit = (jsonData) => {
 
@@ -35,36 +35,38 @@ function FieldList()
             data: "{\"group_name\" : \"" + jsonData.group_name + "\" , \"photo_url\" : \"" + jsonData.photo_url + "\" }",
             success: function (retValue) {
 
-                console.log(retValue);
+                setText(retValue);
             },
             error: function (request, status, error) {
-                console.log(request.responseText);
+                setText(request.responseText);
             }
 
         });
 
     };
 
-    return(
-        
+    return (
+
         <div>
             <form className={styles.FieldList} onSubmit={handleSubmit(onSubmit)}>
                 <ul className={styles}>
                     <li>Create Transaction</li>
                     <li><input placeholder="Group Name" name="group_name" ref={register({ required: true })} /></li>
                     {errors.first_name && 'Group name is required.'}
-                    <li><input placeholder="Amount to Pay" name="amount" ref={register({required: true})} /></li>
+                    <li><input placeholder="Amount to Pay" name="amount" ref={register({ required: true })} /></li>
                     {errors.first_name && 'Amount required'}
-                    <li><input placeholder="Message" name="transaction_content" ref={register({required: true})} /></li>
+                    <li><input placeholder="Message" name="transaction_content" ref={register({ required: true })} /></li>
                     {errors.first_name && 'Message for transaction is required.'}
-                    <li><input placeholder="Provide URL for Bill" name="photo_url" ref={register({required: true})} /></li>
+                    <li><input placeholder="Provide URL for Bill" name="photo_url" ref={register({ required: true })} /></li>
                     {errors.first_name && 'Photo URL required'}
 
                     <input type="submit" />
-                </ul>
-         </form>
 
-     </div>
+                    <p>{text}</p>
+                </ul>
+            </form>
+
+        </div>
     );
 }
 
