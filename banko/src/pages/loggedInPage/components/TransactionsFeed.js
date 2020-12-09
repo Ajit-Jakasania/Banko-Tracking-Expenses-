@@ -21,8 +21,6 @@ function TransactionsFeed() {
             url: 'http://localhost:8080/getTransactions',
             type: 'get',
             dataType: 'json',
-            //im assuming instead of context.user_id you mean state.id for the global Id variable?
-            //data: { user_id: context.user_id },
             data: { user_id: state.id },
             success: function (data) {
 

@@ -9,6 +9,7 @@ import LogoutButton from './navbarButtons/LogoutButton';
 import LoggedInPage from '../../pages/loggedInPage/LoggedInPage';
 import GroupRegisterPage from '../../pages/groupRegisterPage/GroupRegisterPage';
 import JoinGroupPage from '../../pages/joinGroupPage/JoinGroupPage'
+import AddTransactionPage from '../../pages/createTransactionPage/AddTransactionPage';
 
 function NavbarLoggedIn() {
 
@@ -24,11 +25,13 @@ function NavbarLoggedIn() {
 
                 <ButtonContainer text="Join Group" link="/joinGroup" />
                 <ButtonContainer text="Create Group" link="/createGroup" />
+                <ButtonContainer text="Create Transaction" link="/createTransaction" />
                 <LogoutButton text="Log out" /> 
             </ div>
             <Route exact path="/logIn" component={TestHomePage} /> 
             <Route path='/joinGroup' component={JoinGroupPage} />
             <Route path='/createGroup' component={GroupRegisterPage} />
+            <Route path='/createTransaction' component={AddTransactionPage} />
         </Router>
     );
 }
