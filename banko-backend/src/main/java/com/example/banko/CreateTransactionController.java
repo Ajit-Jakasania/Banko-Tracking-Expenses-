@@ -44,9 +44,9 @@ public class CreateTransactionController {
         }
 
         if (status == 1)
-            return "Bill made";
+            return "Bill Added";
         else
-            return "Bill not made";
+            return "Bill Failed to Add";
     }
 
     @GetMapping(value = "/getTransactions")
