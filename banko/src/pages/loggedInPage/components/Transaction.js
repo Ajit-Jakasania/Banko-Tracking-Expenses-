@@ -9,10 +9,17 @@ import { Context } from '../../../Store';
 function Transaction(props) {
     const [flag, setFlag] = useState(0);
     const [state, setState] = useContext(Context);
+    const [showImage, setShowImage] = useState(0);
 
     const [jsonData, setJsonData] = useState(new Array());
 
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
+
+    const showImg = () => {
+        if (showImage == 0) setShowImage(1)
+        else setShowImage(0);
+    }
+
 
     const payTransaction = (event) => {
 
@@ -53,7 +60,11 @@ function Transaction(props) {
             }
 
             <br></br>
-            {(props.bill) ? <div>The bill image is hosted at {props.bill}</div> : <div></div>}
+            <div>
+
+                {(props.bill) ? <div> <button onClick={showImg}>Show Bill</button> {(showImage == 1) && <img src={props.bill}></img>}</div> : <p></p>}
+
+            </div>
 
         </div >
     )
