@@ -20,7 +20,7 @@ function FieldList() {
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/userRegister',
+            url: 'https://gothic-point-298207.uc.r.appspot.com/userRegister',
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify(jsonData),

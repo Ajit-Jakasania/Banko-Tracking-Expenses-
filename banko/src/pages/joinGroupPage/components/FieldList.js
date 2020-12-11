@@ -15,7 +15,7 @@ function FieldList() {
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/joinGroup',
+            url: 'https://gothic-point-298207.uc.r.appspot.com/joinGroup',
             type: 'POST',
             dataType: 'json',
             data: "{\"group_name\" : \"" + jsonData.group_name + "\" , \"user_id\" : \"" + state.id + "\" }",

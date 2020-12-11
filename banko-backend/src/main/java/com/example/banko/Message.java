@@ -1,6 +1,7 @@
 package com.example.banko;
 
 import java.sql.*;
+import com.example.BankoBackendServer;
 
 public class Message {
     public String content;

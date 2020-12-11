@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 public class CreateTransactionController {
     @Autowired
     JdbcTemplate jdbcTemplate;

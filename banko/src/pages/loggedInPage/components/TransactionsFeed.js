@@ -18,7 +18,7 @@ function TransactionsFeed() {
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/getTransactions',
+            url: 'https://gothic-point-298207.uc.r.appspot.com/getTransactions',
             type: 'get',
             dataType: 'json',
             data: { user_id: state.id },

@@ -27,7 +27,7 @@ function MessagesFeed() {
         var obj = { "content": message, "user_id": state.id, "group_name": currentGroup };
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/message',
+            url: 'https://gothic-point-298207.uc.r.appspot.com/message',
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify(obj),
@@ -49,7 +49,7 @@ function MessagesFeed() {
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/userGroups',
+            url: 'https://gothic-point-298207.uc.r.appspot.com/userGroups',
             type: 'get',
             dataType: 'json',
             data: { user_id: state.id },
@@ -77,7 +77,7 @@ function MessagesFeed() {
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/userGroupMessages',
+            url: 'https://gothic-point-298207.uc.r.appspot.com/userGroupMessages',
             type: 'get',
             dataType: 'json',
             data: { group_name: groupName },
@@ -103,7 +103,7 @@ function MessagesFeed() {
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/userGroupMessages',
+            url: 'https://gothic-point-298207.uc.r.appspot.com/userGroupMessages',
             type: 'get',
             dataType: 'json',
             data: { group_name: event.target.value },

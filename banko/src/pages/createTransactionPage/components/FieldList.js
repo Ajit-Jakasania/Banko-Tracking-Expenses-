@@ -13,7 +13,7 @@ function FieldList() {
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/transaction',
+            url: 'https://gothic-point-298207.uc.r.appspot.com/transaction',
             type: 'POST',
             dataType: 'json',
             data: "{\"group_name\" : \"" + jsonData.group_name + "\" , \"transaction_content\" : \"" + jsonData.transaction_content + "\" , \"amount\" : \"" + jsonData.amount + "\" }",
@@ -29,7 +29,7 @@ function FieldList() {
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/bill',
+            url: 'https://gothic-point-298207.uc.r.appspot.com/bill',
             type: 'POST',
             dataType: 'json',
             data: "{\"group_name\" : \"" + jsonData.group_name + "\" , \"photo_url\" : \"" + jsonData.photo_url + "\" }",

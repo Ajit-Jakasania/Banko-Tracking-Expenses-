@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 public class UserLogInController {
     @Autowired
     JdbcTemplate jdbcTemplate;

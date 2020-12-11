@@ -4,8 +4,7 @@ import $ from 'jquery'
 import styles from './FieldList.module.css'
 import { Context } from '../../../Store';
 
-function FieldList()
-{
+function FieldList() {
     const { register, handleSubmit, errors } = useForm(); // initialize the hook
     const [state, setState] = useContext(Context);
 
@@ -13,7 +12,7 @@ function FieldList()
 
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/createBankGroup',
+            url: 'https://gothic-point-298207.uc.r.appspot.com/createBankGroup',
             type: 'POST',
             dataType: 'json',
             data: "{\"group_name\" : \"" + jsonData.group_name + "\" , \"user_id\" : \"" + state.id + "\" }",
@@ -29,20 +28,20 @@ function FieldList()
 
     };
 
-    return(
-        
+    return (
+
         <div>
             <form className={styles.FieldList} onSubmit={handleSubmit(onSubmit)}>
                 <ul className={styles}>
                     <li>Create A New Group</li>
                     <li><input placeholder="Group Name" name="group_name" ref={register({ required: true })} /></li>
                     {errors.first_name && 'Group name is required.'}
-                    
+
                     <input type="submit" />
                 </ul>
-         </form>
+            </form>
 
-     </div>
+        </div>
     );
 }
 

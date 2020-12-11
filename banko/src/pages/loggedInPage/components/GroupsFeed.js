@@ -15,7 +15,7 @@ function GroupsFeed() {
     function getGroups() {
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/userGroups',
+            url: 'https://gothic-point-298207.uc.r.appspot.com/userGroups',
             type: 'get',
             dataType: 'json',
             data: { user_id: state.id },

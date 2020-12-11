@@ -1,4 +1,4 @@
-package com.example.banko;
+package com.example;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +12,7 @@ public class BankoBackendServer {
 
     public static void main(String[] args) {
         SpringApplication.run(BankoBackendServer.class, args);
+
         try {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://y5s2h87f6ur56vae.cbetxkdyhwsb.us-east-1.rds.amazonaws.com", "xeka86imtg04uaw8",

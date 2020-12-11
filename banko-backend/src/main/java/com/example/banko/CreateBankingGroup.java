@@ -1,5 +1,7 @@
 package com.example.banko;
 
+import com.example.BankoBackendServer;
+
 import java.sql.*;
 
 public class CreateBankingGroup {
@@ -15,11 +17,11 @@ public class CreateBankingGroup {
         this.user_id = user_id;
     }
 
-//    public CreateBankingGroup(int group_id, String group_name, int user_id) {
-//        this.group_id = group_id;
-//        this.group_name = group_name;
-//        this.user_id = user_id;
-//    }
+    // public CreateBankingGroup(int group_id, String group_name, int user_id) {
+    // this.group_id = group_id;
+    // this.group_name = group_name;
+    // this.user_id = user_id;
+    // }
 
     public int createBankGroup() throws SQLException {
 
@@ -45,8 +47,8 @@ public class CreateBankingGroup {
     public boolean userJoinGroup() throws SQLException {
         Connection connection = BankoBackendServer.connection;
         group_id = getGroupId(group_name, connection);
-        String query = "INSERT INTO omjmf6vzmpqpgc0p.user_in_group (user_id, group_id,date_joined) VALUES (" + this.user_id + ","
-                + this.group_id + ", now())";
+        String query = "INSERT INTO omjmf6vzmpqpgc0p.user_in_group (user_id, group_id,date_joined) VALUES ("
+                + this.user_id + "," + this.group_id + ", now())";
 
         try {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -64,7 +66,8 @@ public class CreateBankingGroup {
     private boolean createGroup(String group_name, Connection connection) {
         boolean flag = false;
 
-        String query = "INSERT INTO omjmf6vzmpqpgc0p.group_list (group_name, date_created) VALUES ('" + group_name + "', now())";
+        String query = "INSERT INTO omjmf6vzmpqpgc0p.group_list (group_name, date_created) VALUES ('" + group_name
+                + "', now())";
 
         try {
             Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -89,8 +92,7 @@ public class CreateBankingGroup {
             ResultSet rs = statement.executeQuery(query);
             if (rs.next()) {
                 group_nameInDatabase = rs.getString("group_name");
-                if(group_nameInDatabase.equals(group_name))
-                {
+                if (group_nameInDatabase.equals(group_name)) {
                     // group_name is not unique
                     return false;
                 }
@@ -100,7 +102,7 @@ public class CreateBankingGroup {
             e.printStackTrace();
         }
 
-        //Group name is unique
+        // Group name is unique
         return true;
 
     }

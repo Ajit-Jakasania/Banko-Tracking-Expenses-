@@ -17,7 +17,7 @@ function Group(props) {
     function getUsers() {
         $.ajax({
             contentType: "application/json;charset=utf-8",
-            url: 'http://localhost:8080/allGroupUser',
+            url: 'https://gothic-point-298207.uc.r.appspot.com/allGroupUser',
             type: 'get',
             dataType: 'json',
             data: { group_id: props.group_id },

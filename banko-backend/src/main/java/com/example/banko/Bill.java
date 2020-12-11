@@ -1,6 +1,7 @@
 package com.example.banko;
 
 import java.sql.*;
+import com.example.BankoBackendServer;
 
 public class Bill {
     public String transaction_content;
@@ -24,8 +25,7 @@ public class Bill {
     public int createBill() throws SQLException {
         Connection connection = BankoBackendServer.connection;
         group_id = getGroupId(group_name, connection);
-        transaction_id = getTransactionId(group_id,connection);
-
+        transaction_id = getTransactionId(group_id, connection);
 
         String query = "INSERT INTO omjmf6vzmpqpgc0p.bill (transaction_id, photo_url) VALUES (" + transaction_id + ", '"
                 + photo_url + "')";
@@ -67,10 +67,11 @@ public class Bill {
     private int getTransactionId(int group_id, Connection connection) {
         int transaction_id = -1;
 
-        String query = "SELECT transaction_id FROM omjmf6vzmpqpgc0p.transaction WHERE group_id =" + group_id ;
+        String query = "SELECT transaction_id FROM omjmf6vzmpqpgc0p.transaction WHERE group_id =" + group_id;
 
         try {
-            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
 
             ResultSet rs = statement.executeQuery(query);
             rs.last();

@@ -13,17 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 public class AllGroupUserController {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
     @CrossOrigin
 
-
     @GetMapping(value = "/allGroupUser")
     public @ResponseBody String getAllGroupUser(@RequestParam(required = false, defaultValue = "") int group_id) {
-        ArrayList<HashMap<String,String>> allGroupUser = new ArrayList<HashMap<String,String>>();
+        ArrayList<HashMap<String, String>> allGroupUser = new ArrayList<HashMap<String, String>>();
         String json = null;
 
         try {
